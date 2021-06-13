@@ -15,8 +15,7 @@
 //	4 : cd
 //	5 : export
 //	6 : unset
-//	7 : bash
-//	8 : exit
+//	7 : exit
 //
 // bin : path to the binary if index == 0
 //
