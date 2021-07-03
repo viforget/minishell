@@ -5,6 +5,10 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include "../lib/libft/libft.h"
 
 /*
 // index value:
@@ -48,5 +52,7 @@ typedef struct s_var
 	char	*content;
 	struct s_var *next;
 }				t_var;
+
+t_command	*parser(char *order, char **env);
 
 #endif
