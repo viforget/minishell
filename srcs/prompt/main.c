@@ -15,7 +15,6 @@ int main(int ac, char **av, char **env)
 		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m ");
 		add_history(str);
 		printf("s: %s\n", str);
-		rl_redisplay();
 		parser(str, env);
 	}
 }
