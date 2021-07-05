@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/07/03 04:46:07 by viforget         ###   ########.fr       */
+/*   Updated: 2021/07/05 13:47:35 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int find_env(char **env, char *word)
 		y = 0;
 		while(env[x][y] && word[y] && (env[x][y] == word[y] || env[x][y]== '='))
 		{
-			printf("pipi\n");
 			y++;
 			if(env[x][y]== '=')
 				return (x);
@@ -139,7 +138,6 @@ t_command	*parser(char *order, char **env)
 	pos = 0;
 	while (order[pos])
 	{
-		printf("caca,%c, %d\n", order[pos],pos);
 		if (ft_strchr(" =.|;<>", order[pos]))
 		{
 			/*if (order[pos] == '=' && pos > 0)
@@ -149,7 +147,6 @@ t_command	*parser(char *order, char **env)
 			else if (order[pos] == ' ')
 			{
 				info->bin = fonction(order, pos, text, env);
-				printf("test\n");
 			}
 			else if (order[pos] == '|')
 			{
@@ -165,7 +162,6 @@ t_command	*parser(char *order, char **env)
 			}
 			else if (order[pos] == '>' && order[pos + 1] != '>')
 			{
-				printf("pIpE\n");
 				info->pipe = 2;
 				info->file = find_next_word(order + pos);
 			}
@@ -182,8 +178,6 @@ t_command	*parser(char *order, char **env)
 		}
 		text[pos] = order[pos];
 		pos++;
-		printf("fin\n");
 	}
-	printf("\nFIN\n");
 	return (info);
 }
