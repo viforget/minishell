@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/07/05 13:47:35 by viforget         ###   ########.fr       */
+/*   Updated: 2021/07/06 20:32:51 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int find_env(char **env, char *word)
 
 int set_index(char *order)
 {
+	printf("on verra ca apres\n");
 	if (strcmp(order, "echo") == 0)
 		return (1);
 	if (strcmp(order, "pwd") == 0)
@@ -50,18 +51,17 @@ int set_index(char *order)
 	return (-1);
 }
 
-char	*fonction(char *order, int pos, char *text, char **env)
+t_command	*fonction(char *text, int pos, char **env, t_command *info)
 {
 	char		*path[2];
 	int 		size;
 	char		**tab;
 	int			x;
 	struct stat	stt;
-	t_command 	*info;
-
-	info = malloc(sizeof(t_command));
-	info->index = set_index(order);
+	
+	info->index = set_index(text);
 	tab = ft_split(env[find_env(env, "PATH")], '=');
+	
 	if(info->index == -1)
 	{
 		tab = ft_split(tab[1], ':');
@@ -74,13 +74,14 @@ char	*fonction(char *order, int pos, char *text, char **env)
 			if (stat(path[1], &stt) == 0)
 			{
 				info->index = 0;
-				return (path[1]);
+				info->bin = path[1];
+				return (info);
 			}
 			free(path[1]);
 			x++;
 		}
 	}
-	return (NULL);
+	return (info);
 }
 
 char	*find_next_word(char *order)
@@ -129,33 +130,69 @@ char	*executable(char *order)
 	return (path);
 }
 
+char *cut(char *order)
+{
+	char *re;
+	int x;
+	int y;
+
+	printf("Reeee :	-%s-\n", order);
+	x = 0;
+	re = malloc(sizeof(char));
+	if (order[x] == ' ')
+		x++;
+	y = 0;
+	while(order[x] != ' ')
+	{
+		re[y] = order[x];
+		x++;
+		y++;
+	}
+	printf("Re : -%s-\n", re);
+	return(re);
+}
+
 t_command	*parser(char *order, char **env)
 {
 	int			pos;
 	char		text[20];
 	t_command	*info;
+	t_command	*save;
+	int t;
+	int try = 0;
 
+	t = 0;
+	info = malloc(sizeof(t_command));
+	save = info;
 	pos = 0;
 	while (order[pos])
 	{
+		printf("test :	%d,	.%s.\n", info->index, text);
 		if (ft_strchr(" =.|;<>", order[pos]))
 		{
+			try = 0;
+			t = 1;
 			/*if (order[pos] == '=' && pos > 0)
 				variable(order, pos, text, env);
 			else*/ if (order[pos] == '.')
 				info->bin = executable(order + pos);
-			else if (order[pos] == ' ')
-			{
-				info->bin = fonction(order, pos, text, env);
-			}
+			else if (order[pos] == ' ' && (info->index <= 7 || info->index >= -1))
+				{
+					info = fonction(cut(text), pos, env, info);
+					printf("test2 :	%d,	.%s.\n", info->index, text);
+				}
 			else if (order[pos] == '|')
 			{
+				t = 0;
+				text[0] = '\0';
 				info->pipe = 1;
 				info->next = malloc(sizeof(t_command));
+				printf("Changement de maillon\n");
 				info = info->next;
 			}
 			else if (order[pos] == ';')
 			{
+				t = 0;
 				info->pipe = 0;
 				info->next = malloc(sizeof(t_command));
 				info = info->next;
@@ -175,9 +212,24 @@ t_command	*parser(char *order, char **env)
 				info->pipe = 4;
 				info->file = find_next_word(order + pos);
 			}
+			else
+			{
+			//	pos++;
+				t = 0;
+			}
 		}
-		text[pos] = order[pos];
+		text[try] = order[pos];
+		text[try + 1] = 0;
 		pos++;
+		try++;
 	}
-	return (info);
+	if (t == 0 || info -> index == -1)
+	{
+		printf("test3 :	%d,	.%s.\n", info->index, text);
+		printf("test3 :	%d,	.%s.\n", info->index, order);
+		info = fonction(cut(text), pos, env, info);
+		printf("test4 :	%d,	.%s.\n", info->index, text);
+	}
+	info->next = NULL;
+	return (save);
 }
