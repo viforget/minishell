@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 
+int	print_struct(t_command *st);
 
 int main(int ac, char **av, char **env)
 {
@@ -16,13 +17,10 @@ int main(int ac, char **av, char **env)
 		rl_on_new_line();
 		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m ");
 		add_history(str);
-		printf("s: %s\n", str);
 		command = parser(str, env);
-		printf("%p\n", command);
-		printf("%p\n", command->next);
-		if (command)
-			printf("|%d|\n", command->next->index);
-		else
-			printf("NOPE\n");
+
+		printf("COMMAND OK\n");
+		print_struct(command);
+		recurs_pipe(command, NULL, 0, env);
 	}
 }

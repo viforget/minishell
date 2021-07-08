@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/07/06 20:32:51 by viforget         ###   ########.fr       */
+/*   Updated: 2021/07/08 09:09:48 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int find_env(char **env, char *word)
 
 int set_index(char *order)
 {
-	printf("on verra ca apres\n");
+	printf("");
 	if (strcmp(order, "echo") == 0)
 		return (1);
 	if (strcmp(order, "pwd") == 0)
@@ -136,7 +136,6 @@ char *cut(char *order)
 	int x;
 	int y;
 
-	printf("Reeee :	-%s-\n", order);
 	x = 0;
 	re = malloc(sizeof(char));
 	if (order[x] == ' ')
@@ -148,7 +147,6 @@ char *cut(char *order)
 		x++;
 		y++;
 	}
-	printf("Re : -%s-\n", re);
 	return(re);
 }
 
@@ -167,7 +165,6 @@ t_command	*parser(char *order, char **env)
 	pos = 0;
 	while (order[pos])
 	{
-		printf("test :	%d,	.%s.\n", info->index, text);
 		if (ft_strchr(" =.|;<>", order[pos]))
 		{
 			try = 0;
@@ -179,7 +176,6 @@ t_command	*parser(char *order, char **env)
 			else if (order[pos] == ' ' && (info->index <= 7 || info->index >= -1))
 				{
 					info = fonction(cut(text), pos, env, info);
-					printf("test2 :	%d,	.%s.\n", info->index, text);
 				}
 			else if (order[pos] == '|')
 			{
@@ -187,7 +183,6 @@ t_command	*parser(char *order, char **env)
 				text[0] = '\0';
 				info->pipe = 1;
 				info->next = malloc(sizeof(t_command));
-				printf("Changement de maillon\n");
 				info = info->next;
 			}
 			else if (order[pos] == ';')
@@ -225,10 +220,7 @@ t_command	*parser(char *order, char **env)
 	}
 	if (t == 0 || info -> index == -1)
 	{
-		printf("test3 :	%d,	.%s.\n", info->index, text);
-		printf("test3 :	%d,	.%s.\n", info->index, order);
 		info = fonction(cut(text), pos, env, info);
-		printf("test4 :	%d,	.%s.\n", info->index, text);
 	}
 	info->next = NULL;
 	return (save);

@@ -53,6 +53,16 @@ typedef struct s_var
 	struct s_var *next;
 }				t_var;
 
+/*
+// PARSER_C
+*/
+
 t_command	*parser(char *order, char **env);
+
+/*
+// PIPE_ARCH_C
+*/
+
+void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 
 #endif
