@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <signal.h>
 
 #include "../lib/libft/libft.h"
 
@@ -60,9 +61,53 @@ typedef struct s_var
 t_command	*parser(char *order, char **env);
 
 /*
+// CUT_C
+*/
+
+char	*cut(char *text);
+char	*cutg(char *text);
+char	*cutb(char *txt);
+
+/*
+// BIN_C
+*/
+
+t_command	*set_bin(char *text, char **env, t_command *info);
+
+/*
+// AV_C
+*/
+
+void	nb_av(t_command *maillon, char *order);
+
+/*
+// TOOLS_C
+*/
+
+void	clean(t_command *info);
+t_command	*mal_maillon(void);
+void	remplir(char *dest, char *txt, int x);
+void	set_guil(int i, t_command *info, char *order, int pos);
+
+/*
 // PIPE_ARCH_C
 */
 
 void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
+
+/*
+// BUILT_IN
+*/
+void	bi_echo(char **av);
+//void	bi_pwd(char **env);
+void	bi_env(char **env);
+char	**bi_export(char **env, char **av);
+
+/*
+// TABDUP_C
+*/
+
+int		 tablen(char **tab);
+char	**tabdup(char **tab);
 
 #endif

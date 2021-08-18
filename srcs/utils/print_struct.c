@@ -31,7 +31,11 @@ void	print_struct(t_command *st)
 	else
 		printf("file_g : NULL\n");
 	if (st->next)
-		printf("next   : %p\n", st->next);
+	{	
+		printf("next   : %p\n\n", st->next);
+		print_struct(st->next);
+	}
 	else
 		printf("next   : NULL\n");
+	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 14:20:39 by lobertin          #+#    #+#             */
-/*   Updated: 2021/05/11 17:34:46 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/07/07 12:30:04 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static char	*ft_strndup(char *src, int n)
 	if (!src)
 		return (NULL);
 	i = 0;
+	copy = NULL;
 	if (!(copy = (char *)malloc((n + 1) * sizeof(char))))
 		return (NULL);
 	i = 0;
@@ -80,7 +81,9 @@ char	**ft_split(char const *s, char c)
 		if (j)
 		{
 			if (!(tab[k++] = ft_strndup((char *)&s[i], j)))
+			{
 				return (split_free(tab, k - 2));
+			}
 			i = i + j;
 		}
 		if (s[i])
