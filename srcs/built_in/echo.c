@@ -10,15 +10,18 @@ int bi_echo(char **av)
 
 	n = 0;
 	i = 1;
-	if (!ft_strcmp(av[i], "-n"))
+	if (av[1])
 	{
-		n = 1;
-		i++;
-	}
-	while(av[i])
-	{
-		printf("%-*s", (int)ft_strlen(av[i]) + (av[i + 1] != 0), av[i]);
-		i++;	
+		if (!ft_strcmp(av[i], "-n"))
+		{
+			n = 1;
+			i++;
+		}
+		while(av[i])
+		{
+			printf("%-*s", (int)ft_strlen(av[i]) + (av[i + 1] != 0), av[i]);
+			i++;	
+		}
 	}
 	if (n == 0)
 		printf("%c", '\n');
