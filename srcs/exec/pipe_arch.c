@@ -36,6 +36,8 @@ char	**exec_built_in(t_command *ins, char **av, char **env)
 		env = bi_export(env, av + 1);
 	if (ins->index == 6)
 		env = bi_unset(env, av + 1);
+	if (ins->index == 7)
+		bi_exit(ins, env);
 	return (env);
 }
 

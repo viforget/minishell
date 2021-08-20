@@ -90,6 +90,12 @@ void	remplir(char *dest, char *txt, int x);
 void	set_guil(int i, t_command *info, char *order, int pos);
 
 /*
+// MAIN_C
+*/
+
+void	free_command(t_command *st);
+
+/*
 // PIPE_ARCH_C
 */
 
@@ -101,9 +107,10 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 void	bi_echo(char **av);
 //void	bi_pwd(char **env);
 void	bi_env(char **env);
-int 	check_in_env(char *str, char **env);
+int		len_name(char *str);
 char	**bi_export(char **env, char **av);
 char	**bi_unset(char **env, char **av);
+void	bi_exit(t_command *ins, char **env);
 
 /*
 // TABDUP_C
