@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+#include <stdio.h>
+
 void bi_env(char **env)
 {
 	int i;

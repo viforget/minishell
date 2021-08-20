@@ -93,7 +93,7 @@ void	set_guil(int i, t_command *info, char *order, int pos);
 // PIPE_ARCH_C
 */
 
-void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
+char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 
 /*
 // BUILT_IN
@@ -101,7 +101,9 @@ void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 void	bi_echo(char **av);
 //void	bi_pwd(char **env);
 void	bi_env(char **env);
+int 	check_in_env(char *str, char **env);
 char	**bi_export(char **env, char **av);
+char	**bi_unset(char **env, char **av);
 
 /*
 // TABDUP_C
@@ -109,5 +111,11 @@ char	**bi_export(char **env, char **av);
 
 int		 tablen(char **tab);
 char	**tabdup(char **tab);
+
+/*
+// READLINE LIBRARY
+*/
+
+//int 	rl_replace_line(const char *text, int clear_undo);
 
 #endif

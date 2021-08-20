@@ -34,10 +34,12 @@ char	**exec_built_in(t_command *ins, char **av, char **env)
 		bi_env(env);
 	if (ins->index == 5)
 		env = bi_export(env, av + 1);
+	if (ins->index == 6)
+		env = bi_unset(env, av + 1);
 	return (env);
 }
 
-void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
+char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 {
 	int fk;
 	int fd[2];
@@ -105,4 +107,5 @@ void	recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 		double_close(fd_n);
 	if (ins->index == 0)
 		waitpid(fk, NULL, 0);
+	return (env);
 }
