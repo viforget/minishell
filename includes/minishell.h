@@ -105,8 +105,9 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 // BUILT_IN
 */
 void	bi_echo(char **av);
-//void	bi_pwd(char **env);
+void	bi_pwd();
 void	bi_env(char **env);
+void	bi_cd(char *str, char **env);
 int		len_name(char *str);
 char	**bi_export(char **env, char **av);
 char	**bi_unset(char **env, char **av);

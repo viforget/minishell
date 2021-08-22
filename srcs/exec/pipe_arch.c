@@ -25,13 +25,14 @@ void	sig_p(int sig)
 
 char	**exec_built_in(t_command *ins, char **av, char **env)
 {
-	printf("%d\n", ins->index);
 	if (ins->index == 1)
 		bi_echo(av);
-	//if (ins->index == 2)
-	//	bi_pwd(env);
+	if (ins->index == 2)
+		bi_pwd(env);
 	if (ins->index == 3)
 		bi_env(env);
+	if (ins->index == 4)
+		bi_cd(av[1], env);
 	if (ins->index == 5)
 		env = bi_export(env, av + 1);
 	if (ins->index == 6)

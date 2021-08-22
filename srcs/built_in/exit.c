@@ -12,5 +12,6 @@ void	bi_exit(t_command *ins, char **env)
 	}
 	free(env);
 	free_command(ins);
+	printf("exit\n");
 	exit(0);
 }
