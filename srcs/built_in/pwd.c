@@ -1,7 +1,10 @@
 #include "minishell.h"
 
-// NOT LIKE THAT
-/*int bi_pwd(env)
+void	bi_pwd()
 {
-	printf("%s", find_in_env(env, "PWD")); //Fonction de Loic
-}*/
+	char *str;
+
+	str = getcwd(NULL, 0); //ASK THE NUMBER
+	printf("%s\n", str);
+	free(str);
+}
