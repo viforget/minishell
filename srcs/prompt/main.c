@@ -5,6 +5,8 @@
 
 int	print_struct(t_command *st);
 
+void	add_history(char *str);
+
 void	free_command(t_command *st)
 {
 	int i;
@@ -26,9 +28,9 @@ void	free_command(t_command *st)
 
 void	sig_m(int sig)
 {
-	printf("\b \n");
+	printf("\n");
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -37,7 +39,7 @@ int main(int ac, char **av, char **env)
 	char 		*str;
 	t_command	*command;
 
-	//add_history("export A=aaa"); //TEMP
+	add_history("export A=aaa"); //TEMP
 	env = tabdup(env);
 	str = " ";
 	while (str)
@@ -47,7 +49,7 @@ int main(int ac, char **av, char **env)
 		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m "/*">"*/);
 		if (str && str[0])
 		{
-	//		add_history(str);
+			add_history(str);
 			command = parser(str, env);
 			//printf("COMMAND OK\n");
 			//print_struct(command);
