@@ -1,13 +1,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <signal.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <signal.h>
 
 #include "../lib/libft/libft.h"
 
@@ -107,7 +107,7 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 void	bi_echo(char **av);
 void	bi_pwd();
 void	bi_env(char **env);
-void	bi_cd(char *str, char **env);
+char	**bi_cd(char *str, char **env);
 int		len_name(char *str);
 char	**bi_export(char **env, char **av);
 char	**bi_unset(char **env, char **av);
