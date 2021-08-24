@@ -9,9 +9,8 @@ char	**bi_cd(char *str, char **env)
 	int	i[2];
 
 	chdir(str);
-	i[0] = check_in_env_u("PWD", env) != -1;
-	i[1] = check_in_env_u("OLDPWD", env) != -1;
-	printf("%d %d\n", i[0], i[1]);
+	i[0] = check_in_env_u("PWD", env);
+	i[1] = check_in_env_u("OLDPWD", env);
 	if (i[0] != -1 && i[1] != -1)
 	{
 		pwd = ft_strjoin("OLD", env[i[0]]);
@@ -21,7 +20,7 @@ char	**bi_cd(char *str, char **env)
 	if (i[0] != -1)
 	{
 		tmp = getcwd(NULL, 0);
-		pwd = ft_strjoin("PWD", tmp);
+		pwd = ft_strjoin("PWD=", tmp);
 		free(tmp);
 		env[i[0]] = pwd;
 	}
