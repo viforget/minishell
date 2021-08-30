@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/17 17:32:54 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/08/22 21:44:15 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ void	size_av(t_command *info, char *order, int size)
 	{
 		x = 0;
 		g = 0;
-		while (order[pos] == '|' || order[pos] == ' ' || order[pos] == '<'
-			|| order[pos] == '>')
+		while ((order[pos] == '|' || order[pos] == ' ' || order[pos] == '<' || order[pos] == '>') && order[pos])
 		{
 			if (order[pos] == '<' || order[pos] == '>')
-				while (order[pos] != ' ' || ((order[pos - 1] == '<' || order[pos - 1] == '>') && order[pos] == ' '))
+				while (order[pos] && (order[pos] != ' ' || ((order[pos - 1] == '<' || order[pos - 1] == '>') && order[pos] == ' ')))
 					pos++;
 			else
 				pos++;
