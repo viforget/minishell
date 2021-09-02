@@ -8,8 +8,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <stdio.h>
 
 #include "../lib/libft/libft.h"
+
+char g_exit;
 
 /*
 // index value:
@@ -119,7 +122,7 @@ char	**bi_cd(char *str, char **env);
 int		len_name(char *str);
 char	**bi_export(char **env, char **av);
 char	**bi_unset(char **env, char **av);
-void	bi_exit(t_command *ins, char **env);
+void	bi_exit(t_command *ins, char **env, char **av);
 
 /*
 // TABDUP_C
