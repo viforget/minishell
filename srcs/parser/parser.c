@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/30 15:28:28 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/02 17:40:25 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,6 @@ t_command	*parser(char *order, char **env)
 	boucle(order, env, info);
 	nb_av(info, order);
 	clean(info);
-	print_struct(info);
+//	print_struct(info);
 	return (info);
 }

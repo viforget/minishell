@@ -5,7 +5,7 @@
 
 int	print_struct(t_command *st);
 
-void	add_history(char *str);
+int	add_history(const char *str);
 
 void	free_command(t_command *st)
 {
@@ -58,7 +58,7 @@ int main(int ac, char **av, char **env)
 			add_history(str);
 			command = parser(str, env);
 			//printf(	"COMMAND OK\n");
-			//print_struct(command);
+			print_struct(command);
 			free(str);
 			if (str[0])
 				env = recurs_pipe(command, NULL, 0, env);

@@ -12,7 +12,7 @@
 
 #include "../lib/libft/libft.h"
 
-char g_exit;
+unsigned char g_exit;
 
 /*
 // index value:

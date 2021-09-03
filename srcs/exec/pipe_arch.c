@@ -38,7 +38,7 @@ char	**exec_built_in(t_command *ins, char **av, char **env)
 	if (ins->index == 6)
 		env = bi_unset(env, av + 1);
 	if (ins->index == 7)
-		bi_exit(ins, env);
+		bi_exit(ins, env, av);
 	return (env);
 }
 
@@ -109,6 +109,6 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 	if(ins->pipe == 1)
 		double_close(fd_n);
 	if (ins->index == 0)
-		waitpid(fk, NULL, 0);
+		g_exit = waitpid(fk, NULL, 0);
 	return (env);
 }

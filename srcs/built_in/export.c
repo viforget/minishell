@@ -7,6 +7,8 @@ int		len_name(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	if (!str[i])
+		return (-1);
 	return (i);
 }
 
@@ -17,6 +19,8 @@ int 	check_in_env(char *str, char **env)
 
 	i = 0;
 	sz = len_name(str);
+	if (sz == -1)
+		return (-2);
 	while (env[i])
 	{
 		if (memcmp(env[i], str, sz + 1) == 0)
@@ -34,6 +38,8 @@ char	**ad_arg(char **env, char *str)
 	int		i;
 
 	i = check_in_env(str, env);
+	if (i == -2)
+		return (env);
 	if (i != -1)
 	{
 		free (env[i]);
@@ -48,7 +54,6 @@ char	**ad_arg(char **env, char *str)
 			env2[i] = env[i];
 			i++;
 		}
-		printf("%s\n", str);
 		env2[i] = ft_strdup(str);
 		env2[i + 1] = NULL;
 		free(env);

@@ -28,7 +28,6 @@ char	**supp_arg(char **env, char *str)
 	b = 0;
 	j = 0;
 	i = check_in_env_u(str, env);
-	printf("%s %d\n", str, i);
 	if (i == -1)
 		return (env);
 	env2 = malloc(sizeof(char *) * tablen(env));
