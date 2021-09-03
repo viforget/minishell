@@ -12,7 +12,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 		if (opwd != -1)
 		{
 			s = ft_strdup(env[opwd] + 7);
-			printf("%s\n", env[opwd]);
+			printf("%s\n", env[opwd] + 7);
 		}
 		else
 			printf("minishell: cd: OLDPWD not set\n");	
@@ -42,8 +42,7 @@ char	**bi_cd(char *str, char **env)
 
 	i[0] = find_env(env, "ENV");
 	i[1] = find_env(env, "OLDPWD");
-	//i[1] = check_in_env_u("OLDPWD", env);
-	s = check_pwd(str, env, i[1], check_in_env_u("HOME", env));
+	s = check_pwd(str, env, i[1], find_env(env, "HOME"));
 	if (!s)
 		return (env);
 	if (chdir(s) == -1)
