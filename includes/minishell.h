@@ -135,6 +135,6 @@ char	**tabdup(char **tab);
 // READLINE LIBRARY
 */
 
-//int 	rl_replace_line(const char *text, int clear_undo);
+int 	rl_replace_line(const char *text, int clear_undo);
 
 #endif
