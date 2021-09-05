@@ -12,17 +12,17 @@
 
 #include "../lib/libft/libft.h"
 
-unsigned char g_exit;
+int g_exit;
 
 /*
 // index value:
-//    0 : binary
-//    1 : echo
-//    2 : pwd
-//    3 : env
-//    4 : cd
-//    5 : export
-//    6 : unset
+//  f  0 : binary
+//  f  1 : echo
+//  f  2 : pwd
+//  f  3 : env
+//  *  4 : cd
+//  *  5 : export
+//  *  6 : unset
 //    7 : exit
 //
 // bin : path to the binary if index == 0

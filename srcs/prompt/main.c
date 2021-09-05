@@ -52,16 +52,20 @@ int main(int ac, char **av, char **env)
 		signal(SIGINT, sig_m);
 		signal(SIGQUIT, sig_m);
 		rl_on_new_line();
-		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m "/*">"*/);
+		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m ");
 		if (str && str[0])
 		{
 			add_history(str);
-			command = parser(str, env);
-			//printf(	"COMMAND OK\n");
-			print_struct(command);
-			free(str);
 			if (str[0])
+			{
+				command = parser(str, env);
+				//printf(	"COMMAND OK\n");
+				print_struct(command);
+				free(str);
 				env = recurs_pipe(command, NULL, 0, env);
+			}
+			else
+				free(str);
 			free_command(command);
 		}
 	}

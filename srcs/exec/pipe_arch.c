@@ -1,7 +1,4 @@
 #include "minishell.h"
-#include <fcntl.h>
-
-#include <stdio.h>
 
 void	double_close(int fd[2])
 {
@@ -15,6 +12,26 @@ void	cond_dup_close(int fd, int fd2, int nb)
 		close(fd);
 		if (fd2 != -1)
 			close(fd2);
+}
+
+void	opcl_pipe(int pip, t_command *ins, int fd_p[2], int fd_n[2], int fd[2])
+{
+	if(pip == 1)
+	{
+		cond_dup_close(fd_p[0], fd_p[1], 0);
+	}
+	if(ins->pipe == 1)
+	{
+		cond_dup_close(fd_n[1], fd_n[0], 1);
+	}
+	if (ins->pipe == 2 || ins->pipe == 3)
+	{
+		cond_dup_close(fd[0], -1, 1);
+	}
+	if (ins->guil == 1)
+	{
+		cond_dup_close(fd[1], -1, 0);
+	}
 }
 
 void	sig_p(int sig)
@@ -63,32 +80,18 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 		fd[1] = open(ins->file_g, O_RDONLY | O_APPEND);
 	}
 	
-
-	if (ins->index != 0)
+	if (ins->index > 3)
 			env = exec_built_in(ins, ins->av, env);
-	else
+	else if (ins->index != -1)
 	{	
 		fk = fork();
 		if (fk == 0)
 		{
-			if(pip == 1)
-			{
-				cond_dup_close(fd_p[0], fd_p[1], 0);
-			}
-			if(ins->pipe == 1)
-			{
-				cond_dup_close(fd_n[1], fd_n[0], 1);
-			}
-			if (ins->pipe == 2 || ins->pipe == 3)
-			{
-				cond_dup_close(fd[0], -1, 1);
-			}
-			if (ins->guil == 1)
-			{
-				cond_dup_close(fd[1], -1, 0);
-			}
+			opcl_pipe(pip, ins, fd_p, fd_n, fd);
 			if (ins->index == 0)
 				execve(ins->bin, ins->av, env);
+			else
+				env = exec_built_in(ins, ins->av, env);	
 			exit(0);
 		}
 		else
@@ -96,6 +99,9 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 			signal(SIGINT, sig_p);
 		}
 	}
+	else if (ins->av && ins->av[0])
+		printf("minishell: %s: command not found\n", ins->av[0]);
+	
 	if (ins->pipe >= 2 && ins->pipe <= 3)
 		close(fd[0]);
 	if (ins->guil == 1)
@@ -108,7 +114,9 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 	}
 	if(ins->pipe == 1)
 		double_close(fd_n);
-	if (ins->index == 0)
-		g_exit = waitpid(fk, NULL, 0);
+	if (ins->index <= 3 && ins->index > -1)
+		waitpid(fk, &g_exit, 0);
+	g_exit = (unsigned char)g_exit;
+	//printf("%d\n", g_exit);
 	return (env);
 }
