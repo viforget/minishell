@@ -98,8 +98,9 @@ void    set_guil(int i, t_command *info, char *order, int pos);
 */
 
 char    *next_word(char *order);
-int        size_arg(char **env, int pos);
+int		size_arg(char **env, int pos);
 void    setg(t_command *info, char *order, int pos);
+int		ft_ctoa(unsigned char c);
 /*
 // MAIN_C
 */

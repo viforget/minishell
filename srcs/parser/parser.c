@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/02 17:40:25 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/05 17:35:47 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,23 @@ t_command	*boucle(char *order, char **env, t_command *info)
 	return (info);
 }
 
-void	file_new(char *new, char *order, char **env)
+int	file_with_g_exit(char *order)
+{
+	int i;
+	char *str;
+
+	i = g_exit;
+	str = ft_itoa(i);
+	i = 0;
+	while(str[i])
+	{
+		order[i] = str[i];
+		i++;
+	}
+	return (strlen(str));
+}
+
+void	file_new(char *new, char *order, char **env, int s)
 {
 	int	x;
 	int	y;
@@ -72,36 +88,36 @@ void	file_new(char *new, char *order, char **env)
 
 	x = 0;
 	y = 0;
-	while (order[x])
+	while (x < s)
 	{
-		if (order[x] == '$')
+		if (order[x] == 36)
 		{
-			if (find_env(env, next_word(order + x) + 1) != -1)
+			if (order[x + 1] == 63)
+			{
+				y = y + file_with_g_exit(new + y);
+				x = x + 2;
+			}
+			else if (find_env(env, next_word(order + x) + 1) != -1)
 			{
 				e = 0;
-				while (order[x] && env[find_env(env, next_word(order + x) + 1)][e] != '=')
+				while (env[find_env(env, next_word(order + x) + 1)][e] != 61)
 					e++;
 				e++;
-				while (order[x] && env[find_env(env, next_word(order + x) + 1)][e])
+				while (env[find_env(env, next_word(order + x) + 1)][e])
 				{
 					new[y] = env[find_env(env, next_word(order + x) + 1)][e];
 					e++;
 					y++;
 				}	
-				while (order[x] != ' ')
+				while (order[x] != 32 && order[x] != 124 && order[x] != 60
+					&& order[x] != 62)
 					x++;
 			}
 			else
-				while (order[x] != ' ')
+				while (order[x] != 32 && order[x] != 124 && order[x] != 60
+					&& order[x] != 62)
 					x++;
 		}
-/*		else if (order[x] == 39)
-		{
-			x++;
-			while(order[x] != 39)
-				x++;
-			x++;
-		}*/
 		else
 		{
 			new[y] = order[x];
@@ -109,6 +125,7 @@ void	file_new(char *new, char *order, char **env)
 			x++;
 		}
 	}
+	new[y] = '\0';
 }
 
 char	*change_arg(char *order, char **ev)
@@ -123,10 +140,16 @@ char	*change_arg(char *order, char **ev)
 	{
 		if (order[pos] == '$')
 		{
-			if (find_env(ev, next_word(order + pos) + 1) != -1)
+			if (order[pos + 1] == '?')
+			{
+				s = s + ft_ctoa(g_exit);
+				pos++;
+			}
+			else if (find_env(ev, next_word(order + pos) + 1) != -1)
 			{
 				s = s + size_arg(ev, find_env(ev, next_word(order + pos) + 1));
-				while (order[pos] != ' ' && order[pos])
+				while (order[pos] != 32 && order[pos] != 124 && order[pos] != 60
+					&& order[pos] != 62 && order[pos])
 				{
 					pos++;
 					s--;
@@ -135,13 +158,6 @@ char	*change_arg(char *order, char **ev)
 			else
 				pos++;
 		}
-/*		else if (order[pos] == 39)
-		{
-			pos++;
-			while(order[pos] != 39)
-				pos++;
-			pos++;
-		}*/
 		else
 		{
 			s++;
@@ -149,7 +165,7 @@ char	*change_arg(char *order, char **ev)
 		}
 	}
 	new = malloc(s + 1);
-	file_new(new, order, ev);
+	file_new(new, order, ev, s + 1);
 	return (new);
 }
 
@@ -158,13 +174,11 @@ t_command	*parser(char *order, char **env)
 	t_command	*info;
 
 	info = mal_maillon();
+	order = change_arg(order, env);
 	if (order[0] < 32)
 		return (info);
-	order = change_arg(order, env);
-//	printf("[%s]\n", order);
 	boucle(order, env, info);
 	nb_av(info, order);
 	clean(info);
-//	print_struct(info);
 	return (info);
 }

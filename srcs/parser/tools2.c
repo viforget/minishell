@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:09:06 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/30 15:27:10 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/02 17:07:14 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ char	*next_word(char *order)
 {
 	char	*next_word;
 	int		size;
-	int		pos;
+	int		x;
 
 	size = 0;
-	pos = 0;
-	while (order[pos] != ' ')
+	x = 0;
+	while (order[x] != 32 && order[x] != 124 && order[x] != 60 && order[x] != 62
+		&& order[x])
 	{
-		pos++;
+		x++;
 		size++;
 	}
 	next_word = malloc(size + 1);
@@ -60,4 +61,13 @@ void	setg(t_command *info, char *order, int pos)
 		set_guil(2, info, order, pos);
 	else if (order[pos] == '<')
 		set_guil(1, info, order, pos);
+}
+
+int	ft_ctoa(unsigned char c)
+{
+	if (c < 10)
+		return(1);
+	if (c < 100)
+		return(2);
+	return(3);
 }

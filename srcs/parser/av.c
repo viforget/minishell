@@ -6,11 +6,26 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/22 21:44:15 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/02 18:26:55 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_if(char x, char y, int test)
+{
+	if (test == 0)
+	{
+		if (x && (x != ' ' || ((y == '<' || y == '>') && x == ' ')))
+			return (0);
+	}
+	if (test == 1)
+	{
+//		if (???)
+			return (0);
+	}
+	return (1);
+}
 
 void	size_av(t_command *info, char *order, int size)
 {
@@ -22,14 +37,16 @@ void	size_av(t_command *info, char *order, int size)
 
 	y = 0;
 	pos = 0;
+	printf("\n%s\n",order);
 	while (order[pos] != '|' && order[pos] && size--)
 	{
 		x = 0;
 		g = 0;
-		while ((order[pos] == '|' || order[pos] == ' ' || order[pos] == '<' || order[pos] == '>') && order[pos])
+		while ((order[pos] == '|' || order[pos] == ' ' || order[pos] == '<'
+				|| order[pos] == '>') && order[pos])
 		{
 			if (order[pos] == '<' || order[pos] == '>')
-				while (order[pos] && (order[pos] != ' ' || ((order[pos - 1] == '<' || order[pos - 1] == '>') && order[pos] == ' ')))
+				while (ft_if(order[pos], order[pos - 1], 0) == 0)
 					pos++;
 			else
 				pos++;
@@ -41,11 +58,8 @@ void	size_av(t_command *info, char *order, int size)
 			{
 				g = 2;
 				pos++;
-				while (order[pos] != 34)
-				{
-					pos++;
+				while (order[pos] != 34 && order[pos++])
 					x++;
-				}
 			}
 			else
 				x++;
@@ -91,9 +105,11 @@ void	nb_av(t_command *maillon, char *order)
 		save = pos - save;
 		maillon->av = malloc(sizeof(char *) * x + 1);
 		size_av(maillon, cut(order + (pos - save)), x);
-		while (order[pos] == ' ' || order[pos] == '<' || order[pos] == '>'
-			|| order[pos] == '|')
+		while ((order[pos] == ' ' || order[pos] == '<' || order[pos] == '>'
+			|| order[pos] == '|') && order[pos])
+		{
 			pos++;
+		}
 		maillon = maillon->next;
 		x = 0;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 06:09:07 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/02 17:40:21 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/02 17:36:11 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	remplir(char *dest, char *txt, int x)
 		}
 		y++;
 	}
-	//printf("%s %d\n", dest, z);
 	dest[z] = '\0';
 }
 

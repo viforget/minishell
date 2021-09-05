@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/26 08:50:41 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/01 16:56:19 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	find_env(char **env, char *word)
 	int		y;
 
 	x = 0;
-	while (x < 26)
+	while (env[x])
 	{
 		y = 0;
-		while (env[x][y] && (env[x][y] == word[y] ||
-			env[x][y] == 61))
+		while (env[x][y] && (env[x][y] == word[y] || env[x][y] == 61))
 		{
 			if (env[x][y] == '=' && (word[y] == ' ' || !word[y]))
 				return (x);
