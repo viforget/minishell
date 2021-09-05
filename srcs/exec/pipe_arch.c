@@ -116,7 +116,6 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 		double_close(fd_n);
 	if (ins->index <= 3 && ins->index > -1)
 		waitpid(fk, &g_exit, 0);
-	g_exit = (unsigned char)g_exit;
-	//printf("%d\n", g_exit);
+	g_exit = g_exit / 256;
 	return (env);
 }
