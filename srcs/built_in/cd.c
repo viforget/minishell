@@ -1,6 +1,15 @@
 #include "minishell.h"
 
-int 	check_in_env_u(char *str, char **env);
+char *ft_strjoin2(char *s1, char *s2)
+{
+	char *str1;
+	char *str2;
+
+	str1 = ft_strjoin(s1, "/");
+	str2 = ft_strjoin(str1, s2);
+	free(str1);
+	return (str2);
+}
 
 char	*check_pwd(char *str, char **env, int opwd, int home)
 {
@@ -24,7 +33,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 			printf("minishell: cd: HOME not set\n");
 	else if (ft_memcmp("~/", str, 2) == 0)
 		if (home != -1)
-			s = ft_strjoin(env[home] + 5, str + 2);
+			s = ft_strjoin2(env[home] + 5, str + 2);
 		else
 			printf("minishell: cd: HOME not set\n");
 	else
