@@ -1,11 +1,4 @@
 #include "minishell.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/readline.h>
-
-int	print_struct(t_command *st);
-
-int	add_history(const char *str);
 
 void	free_command(t_command *st)
 {
@@ -44,7 +37,6 @@ int main(int ac, char **av, char **env)
 	char 		*str;
 	t_command	*command;
 
-	//add_history("export A=aaa"); //TEMP
 	env = tabdup(env);
 	str = " ";
 	while (str)
@@ -59,8 +51,6 @@ int main(int ac, char **av, char **env)
 			if (str[0])
 			{
 				command = parser(str, env);
-				//printf(	"COMMAND OK\n");
-				print_struct(command);
 				free(str);
 				env = recurs_pipe(command, NULL, 0, env);
 			}
@@ -69,5 +59,6 @@ int main(int ac, char **av, char **env)
 			free_command(command);
 		}
 	}
+	rl_clear_history();
 	printf("exit\n");
 }

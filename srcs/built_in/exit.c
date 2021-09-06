@@ -50,5 +50,6 @@ void	bi_exit(t_command *ins, char **env, char **av)
 			printf("minishell: exit: %s: numeric argument required\n", av[1]);
 	}
 	free_command(ins);
+	rl_clear_history();
 	exit(ret);
 }

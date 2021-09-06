@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <stdio.h>
+#include <readline/readline.h>
 
 #include "../lib/libft/libft.h"
 
@@ -137,5 +138,6 @@ char	**tabdup(char **tab);
 */
 
 int 	rl_replace_line(const char *text, int clear_undo);
+void	rl_clear_history (void);
 
 #endif
