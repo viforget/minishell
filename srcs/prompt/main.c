@@ -2,14 +2,14 @@
 
 void	free_command(t_command *st)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (st->bin)
 		free(st->bin);
 	if (st->av)
 	{
-		while(st->av[i])
+		while (st->av[i])
 			free(st->av[i++]);
 		free(st->av);
 	}
@@ -32,19 +32,24 @@ void	sig_m(int sig)
 		printf("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m   \b\b");
 }
 
-int main(int ac, char **av, char **env)
+char	*new_line(void)
 {
-	char 		*str;
+	signal(SIGINT, sig_m);
+	signal(SIGQUIT, sig_m);
+	rl_on_new_line();
+	return (readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m "));
+}
+
+int	main(int ac, char **av, char **env)
+{
+	char		*str;
 	t_command	*command;
 
 	env = tabdup(env);
 	str = " ";
 	while (str)
 	{
-		signal(SIGINT, sig_m);
-		signal(SIGQUIT, sig_m);
-		rl_on_new_line();
-		str = readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m ");
+		str = new_line();
 		if (str && str[0])
 		{
 			add_history(str);
