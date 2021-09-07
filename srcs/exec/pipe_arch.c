@@ -42,6 +42,7 @@ void	sig_p(int sig)
 
 char	**exec_built_in(t_command *ins, char **av, char **env)
 {
+	g_exit = 0;
 	if (ins->index == 1)
 		bi_echo(av);
 	if (ins->index == 2)
@@ -100,7 +101,7 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 		}
 	}
 	else if (ins->av && ins->av[0])
-		printf("minishell: %s: command not found\n", ins->av[0]);
+		g_exit = exit_error(ins->av[0], "command not found", 127, 0);
 	
 	if (ins->pipe >= 2 && ins->pipe <= 3)
 		close(fd[0]);

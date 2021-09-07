@@ -32,7 +32,7 @@ int 	check_in_env(char *str, char **env)
 	return (-1);
 }
 
-char	**ad_arg(char **env, char *str)
+char	**ad_arg_exp(char **env, char *str)
 {
 	char	**env2;
 	int		i;
@@ -43,7 +43,7 @@ char	**ad_arg(char **env, char *str)
 	if (i != -1)
 	{
 		free (env[i]);
-		env[i] = str;
+		env[i] = ft_strdup(str);
 		return (env);
 	}
 	else
@@ -70,7 +70,7 @@ char	**bi_export(char **env, char **av)
 		bi_env(env);
 	while(av[i])
 	{
-		env = ad_arg(env, av[i]);
+		env = ad_arg_exp(env, av[i]);
 		i++;
 	}
 	return (env);

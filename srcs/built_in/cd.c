@@ -24,7 +24,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 			printf("%s\n", env[opwd] + 7);
 		}
 		else
-			printf("minishell: cd: OLDPWD not set\n");
+			g_exit = exit_error("cd", "OLDPWD not set", 1, 0);
 	}
 	else if (ft_memcmp("~", str, 2) == 0 || ft_memcmp("~/", str, 2) == 0)
 	{
@@ -33,7 +33,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 		else if (home != -1 && str[1] == '/')
 			s = ft_strjoin2(env[home] + 5, str + 2);
 		else
-			printf("minishell: cd: HOME not set\n");
+			g_exit = exit_error("cd", "HOME not set", 1, 0);
 	}
 	else
 		s = ft_strdup(str);
@@ -68,7 +68,7 @@ char	**bi_cd(char *str, char **env)
 	if (!s)
 		return (env);
 	if (chdir(s) == -1)
-		printf("minishell: cd: %s: No such file or directory\n", s);
+		g_exit = exit_error(s, "No such file or directory", 1, 4);
 	else
 		cd_env(env, i);
 	free(s);

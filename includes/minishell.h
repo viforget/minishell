@@ -93,6 +93,7 @@ void    clean(t_command *info);
 t_command    *mal_maillon(void);
 void    remplir(char *dest, char *txt, int x);
 void    set_guil(int i, t_command *info, char *order, int pos);
+int		exit_error(char *exe, char *msg, int exit_value, int arg);
 
 /*
 // TOOLS2_C
@@ -122,6 +123,7 @@ void	bi_pwd();
 void	bi_env(char **env);
 char	**bi_cd(char *str, char **env);
 int		len_name(char *str);
+char	**ad_arg_exp(char **env, char *str);
 char	**bi_export(char **env, char **av);
 char	**bi_unset(char **env, char **av);
 void	bi_exit(t_command *ins, char **env, char **av);
