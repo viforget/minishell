@@ -28,6 +28,16 @@ int	ft_atoc(const char *str)
 	return ((unsigned char)n_final);
 }
 
+void	free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		free(env[i++]);
+	free(env);
+}
+
 void	bi_exit(t_command *ins, char **env, char **av)
 {
 	int	i;

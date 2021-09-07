@@ -134,6 +134,16 @@ void		free_command(t_command *st);
 char		**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 
 /*
+// PIPE_OPEN_CLOSE_C
+*/
+
+void	double_close(int fd[2]);
+void	cond_dup_close(int fd, int fd2, int nb);
+void	opcl_pipe(t_command *ins, int fd_p[2], int fd_n[2], int fd[2]);
+void	pipe_and_open(int fd_n[2], int fd[2], t_command *ins);
+void	pipe_and_exit(t_command *ins, int fd[2], int fd_p[2], int pip);
+
+/*
 // BUILT_IN
 */
 int			bi_echo(char **av);
@@ -144,6 +154,7 @@ int			len_name(char *str);
 char		**ad_arg_exp(char **env, char *str);
 char		**bi_export(char **env, char **av);
 char		**bi_unset(char **env, char **av);
+void		free_env(char **env);
 void		bi_exit(t_command *ins, char **env, char **av);
 int			exit_error(char *exe, char *msg, int exit_value, int arg);
 

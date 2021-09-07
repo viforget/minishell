@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:32:28 by lobertin          #+#    #+#             */
-/*   Updated: 2021/08/11 19:31:51 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:58:18 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*cut(char *text)
 	int		i;
 
 	x = 0;
-	while (text[x] == ' ' || text[x] == '|')
+	while (text[x] == ' ' || text[x] == 9 || text[x] == '|')
 		x++;
 	y = 0;
 	z = x;
@@ -49,22 +49,20 @@ char	*cutg(char *text)
 	guil = 1;
 	x = 0;
 	y = 0;
-	while (text[x] == ' ' || text[x] == '|')
+	while (text[x] == ' ' || text[x] == 9 || text[x] == '|')
 		x++;
 	z = x;
 	while (text[x++])
 		y++;
 	final = malloc(sizeof(char) * y + 1);
 	x = 0;
-	while ((y-- && text[z] != ' ') || guil == -1)
+	while ((y-- && text[z] != ' ' && text[z] != 9) || guil == -1)
 	{
 		if (text[z] != 34)
-			final[x++] = text[z++];
+			final[x++] = text[z];
 		else
-		{
-			z++;
 			guil = guil * -1;
-		}
+		z++;
 	}
 	final[x] = '\0';
 	return (final);
@@ -79,9 +77,9 @@ char	*cutb(char *txt)
 	final = malloc(8);
 	pos = 0;
 	posf = 0;
-	while (txt[pos] == ' ')
+	while (txt[pos] == ' ' || txt[pos] == 9)
 		pos++;
-	while (txt[pos] && txt[pos] != ' ' && txt[pos] != '|')
+	while (txt[pos] && txt[pos] != ' ' && txt[pos] != 9 && txt[pos] != '|')
 	{
 		if (txt[pos] == 34)
 			pos++;

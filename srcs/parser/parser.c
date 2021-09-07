@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/05 17:41:56 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/07 14:07:53 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_command	*boucle(char *order, char **env, t_command *info)
 			}
 			pos++;
 		}
-		if (order[pos] == ' ' && info->index == -1)
+		if ((order[pos] == ' ' || order[pos] == 9) && info->index == -1)
 			info = set_bin(cutb(text), env, info);
-		else if (order[pos] == '|')
+		else if (order[pos] == '|' && order[pos + 1])
 		{
 			if (info->index == -1)
 				set_bin(cut(text), env, info);
@@ -66,13 +66,13 @@ t_command	*boucle(char *order, char **env, t_command *info)
 
 int	file_with_g_exit(char *order)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = g_exit;
 	str = ft_itoa(i);
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		order[i] = str[i];
 		i++;
@@ -110,12 +110,12 @@ void	file_new(char *new, char *order, char **env, int s)
 					y++;
 				}	
 				while (order[x] != 32 && order[x] != 124 && order[x] != 60
-					&& order[x] != 62)
+					&& order[x] != 62 && order[x] != 9)
 					x++;
 			}
 			else
 				while (order[x] != 32 && order[x] != 124 && order[x] != 60
-					&& order[x] != 62)
+					&& order[x] != 62 && order[x] != 9)
 					x++;
 		}
 		else
@@ -149,7 +149,7 @@ char	*change_arg(char *order, char **ev)
 			{
 				s = s + size_arg(ev, find_env(ev, next_word(order + pos) + 1));
 				while (order[pos] != 32 && order[pos] != 124 && order[pos] != 60
-					&& order[pos] != 62 && order[pos])
+					&& order[pos] != 62 && order[pos] && order[pos] != 9)
 				{
 					pos++;
 					s--;
@@ -175,10 +175,12 @@ t_command	*parser(char *order, char **env)
 
 	info = mal_maillon();
 	order = change_arg(order, env);
-	if (order[0] < 32)
+	order = verif_guil(order);
+	if (order[0] < 32 && order[0] != 9)
 		return (info);
 	boucle(order, env, info);
 	nb_av(info, order);
 	clean(info);
+	print_struct(info);
 	return (info);
 }

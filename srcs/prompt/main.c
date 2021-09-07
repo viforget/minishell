@@ -65,5 +65,6 @@ int	main(int ac, char **av, char **env)
 		}
 	}
 	rl_clear_history();
+	free_env(env);
 	printf("exit\n");
 }

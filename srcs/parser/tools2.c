@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:09:06 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/02 17:07:14 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/06 18:25:14 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*next_word(char *order)
 
 	size = 0;
 	x = 0;
-	while (order[x] != 32 && order[x] != 124 && order[x] != 60 && order[x] != 62
-		&& order[x])
+	while (order[x] != 32 && order[x] != 9 && order[x] != 124
+		&& order[x] != 60 && order[x] != 62 && order[x])
 	{
 		x++;
 		size++;
@@ -66,8 +66,34 @@ void	setg(t_command *info, char *order, int pos)
 int	ft_ctoa(unsigned char c)
 {
 	if (c < 10)
-		return(1);
+		return (1);
 	if (c < 100)
-		return(2);
-	return(3);
+		return (2);
+	return (3);
+}
+
+char	*verif_guil(char *order)
+{
+	int		pos;
+	int		is;
+	char	*new;
+
+	pos = 0;
+	is = 1;
+	while (order[pos])
+	{
+		if (order[pos] == 34)
+			is = is * -1;
+		pos++;
+	}
+	if (is == -1)
+	{
+		new = malloc(ft_strlen(order) + 1);
+		ft_strlcpy(new, order, pos + 1);
+		new[pos] = 34;
+		new[pos + 1] = '\0';
+		free(order);
+		return (new);
+	}
+	return (order);
 }

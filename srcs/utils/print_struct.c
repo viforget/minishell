@@ -1,9 +1,12 @@
+//
+//PENSER A DELETE AVANT DE PUSH
+//
+
 #include "minishell.h"
-#include <stdio.h>
 
 void	print_struct(t_command *st)
 {
-	int i;
+	int	i;
 	i = 0;
 	printf("index  : %d\n", st->index);
 	if (st->bin)
@@ -36,6 +39,5 @@ void	print_struct(t_command *st)
 		print_struct(st->next);
 	}
 	else
-		printf("next   : NULL\n");
-	
+		printf("next   : NULL\n");	
 }
