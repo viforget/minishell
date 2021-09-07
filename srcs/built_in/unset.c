@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-int 	check_in_env_u(char *str, char **env)
+int	check_in_env_u(char *str, char **env)
 {
-	int sz;
-	int i;
+	int	sz;
+	int	i;
 
 	i = 0;
 	sz = len_name(str);
@@ -20,10 +20,10 @@ int 	check_in_env_u(char *str, char **env)
 
 char	**supp_arg(char **env, char *str)
 {
-	int i;
-	int j;
-	int b;
-	char **env2;
+	int		i;
+	int		j;
+	int		b;
+	char	**env2;
 
 	b = 0;
 	j = 0;
@@ -31,26 +31,25 @@ char	**supp_arg(char **env, char *str)
 	if (i == -1)
 		return (env);
 	env2 = malloc(sizeof(char *) * tablen(env));
-	while(env[j + b])
+	while (env[j + b])
 	{
-			if (j == i)
-				b = 1;
-			env2[j] = env[j + b];
-			j++;
+		if (j == i)
+			b = 1;
+		env2[j] = env[j + b];
+		j++;
 	}
 	env2[j] = NULL;
 	free(env);
-	return(env2);
+	return (env2);
 }
 
 char	**bi_unset(char **env, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(av[i])
+	while (av[i])
 	{
-
 		env = supp_arg(env, av[i]);
 		i++;
 	}

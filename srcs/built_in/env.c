@@ -1,13 +1,11 @@
 #include "minishell.h"
 
-#include <stdio.h>
-
-void bi_env(char **env)
+void	bi_env(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		printf("%s\n", env[i]);
 		i++;

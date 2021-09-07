@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-size_t  ft_strlen(const char *str);
-int     ft_strcmp(const char *s1, const char *s2);
+#include "minishell.h"
 
-int bi_echo(char **av)
+int	bi_echo(char **av)
 {
 	int		i;
 	char	n;
@@ -17,10 +14,10 @@ int bi_echo(char **av)
 			n = 1;
 			i++;
 		}
-		while(av[i])
+		while (av[i])
 		{
 			printf("%-*s", (int)ft_strlen(av[i]) + (av[i + 1] != 0), av[i]);
-			i++;	
+			i++;
 		}
 	}
 	if (n == 0)

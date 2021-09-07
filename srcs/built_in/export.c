@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int		len_name(char *str)
+int	len_name(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -12,10 +12,10 @@ int		len_name(char *str)
 	return (i);
 }
 
-int 	check_in_env(char *str, char **env)
+int	check_in_env(char *str, char **env)
 {
-	int sz;
-	int i;
+	int	sz;
+	int	i;
 
 	i = 0;
 	sz = len_name(str);
@@ -49,7 +49,7 @@ char	**ad_arg_exp(char **env, char *str)
 	else
 	{
 		env2 = malloc(sizeof(char *) * tablen(env) + 2);
-		while(env[i])
+		while (env[i])
 		{
 			env2[i] = env[i];
 			i++;
@@ -63,12 +63,12 @@ char	**ad_arg_exp(char **env, char *str)
 
 char	**bi_export(char **env, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!av[0])
 		bi_env(env);
-	while(av[i])
+	while (av[i])
 	{
 		env = ad_arg_exp(env, av[i]);
 		i++;
