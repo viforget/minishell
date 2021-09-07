@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/07 14:07:53 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/07 22:06:00 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_command	*boucle(char *order, char **env, t_command *info)
 		else if (order[pos] == '|' && order[pos + 1])
 		{
 			if (info->index == -1)
-				set_bin(cut(text), env, info);
+				set_bin(cutb(text), env, info);
 			x = -1;
 			if (info->pipe == 0)
 				info->pipe = 1;
