@@ -16,7 +16,14 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 	char	*s;
 
 	s = NULL;
-	if (ft_strncmp(str, "-", 2) == 0)
+	if (!str)
+	{
+		if (home != -1)
+			s = ft_strdup(env[home] + 5);
+		else
+			g_exit = exit_error("cd", "HOME not set", 1, 0);
+	}
+	else if (ft_strncmp(str, "-", 2) == 0)
 	{
 		if (opwd != -1)
 		{
@@ -25,15 +32,6 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 		}
 		else
 			g_exit = exit_error("cd", "OLDPWD not set", 1, 0);
-	}
-	else if (ft_memcmp("~", str, 2) == 0 || ft_memcmp("~/", str, 2) == 0)
-	{
-		if (home != -1 && str[1] == 0)
-			s = ft_strdup(env[home] + 5);
-		else if (home != -1 && str[1] == '/')
-			s = ft_strjoin2(env[home] + 5, str + 2);
-		else
-			g_exit = exit_error("cd", "HOME not set", 1, 0);
 	}
 	else
 		s = ft_strdup(str);
