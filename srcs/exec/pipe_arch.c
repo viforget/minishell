@@ -29,7 +29,10 @@ char	**exec_built_in(t_command *ins, char **av, char **env)
 void	execution(t_command *ins, char **env)
 {
 	if (ins->index == 0)
+	{
 		execve(ins->bin, ins->av, env);
+		g_exit = exit_error(ins->av[0], "command not found", 127, 0);
+	}
 	exec_built_in(ins, ins->av, env);
 	free_command(ins);
 	free_env(env);

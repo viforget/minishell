@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/07 19:38:38 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:18:21 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ int	ft_if(char x, char y, int test)
 	if (test == 0)
 	{
 		if (x && (x != ' ' || x != 9 || ((y == '<' || y == '>') && x == ' ')))
-			return (0);
+			return (1);
 	}
 	if (test == 1)
 	{
-		return (0);
+		if (x != 32 && x != 124 && x != 60 && x != 62 && x != 9 && x)
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
 void	size_av(t_command *info, char *order, int size)
@@ -41,8 +42,7 @@ void	size_av(t_command *info, char *order, int size)
 		x = 0;
 		g = 0;
 		pos = pos + skip_hard(order + pos);
-		while (order[pos] != '|' && order[pos] != ' ' && order[pos] != 9
-			&& order[pos] != '<' && order[pos] != '>' && order[pos] != '\0')
+		while (ft_if(order[pos], order[pos - 1], 1))
 		{
 			if (order[pos] == 34)
 			{
@@ -70,13 +70,11 @@ int	nb_word(char *order)
 
 	x = 0;
 	pos = 0;
-	printf("txt = %s\n", order);
 	while (order[pos] == ' ' || order[pos] == 9)
-			pos++;
+		pos++;
 	while (order[pos] != '|' && order[pos])
 	{
-		while (order[pos] != ' ' && order[pos] != 9 && order[pos] != '<'
-			&& order[pos] != '>' && order[pos] && order[pos] != '|')
+		while (ft_if(order[pos], order[pos + 1], 1))
 		{
 			if (order[pos] == 34)
 			{
@@ -89,9 +87,12 @@ int	nb_word(char *order)
 		x++;
 		while ((order[pos] == ' ' || order[pos] == 9
 				|| order[pos] == '<' || order[pos] == '>') && order[pos])
+		{
+			if (order[pos] == '<' || order[pos] == '>')
+				x--;
 			pos++;
+		}
 	}
-	printf("%d\n", x);
 	return (x);
 }
 

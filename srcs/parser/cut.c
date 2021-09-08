@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:32:28 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/07 18:58:18 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/08 09:39:08 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ char	*cutg(char *text)
 	while (text[x] == ' ' || text[x] == 9 || text[x] == '|')
 		x++;
 	z = x;
-	while (text[x++])
-		y++;
 	final = malloc(sizeof(char) * y + 1);
 	x = 0;
-	while ((y-- && text[z] != ' ' && text[z] != 9) || guil == -1)
+	while (ft_if(text[z], text[z - 1], 1) || guil == -1)
 	{
 		if (text[z] != 34)
 			final[x++] = text[z];
@@ -79,7 +77,7 @@ char	*cutb(char *txt)
 	posf = 0;
 	while (txt[pos] == ' ' || txt[pos] == 9)
 		pos++;
-	while (txt[pos] && txt[pos] != ' ' && txt[pos] != 9 && txt[pos] != '|')
+	while (ft_if(txt[pos], txt[pos + 1], 1))
 	{
 		if (txt[pos] == 34)
 			pos++;

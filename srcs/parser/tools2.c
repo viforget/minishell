@@ -6,7 +6,7 @@
 /*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:09:06 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/06 18:25:14 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/08 07:34:16 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,10 @@ char	*next_word(char *order)
 {
 	char	*next_word;
 	int		size;
-	int		x;
 
 	size = 0;
-	x = 0;
-	while (order[x] != 32 && order[x] != 9 && order[x] != 124
-		&& order[x] != 60 && order[x] != 62 && order[x])
-	{
-		x++;
+	while (ft_isalnum(order[size]) || order[size] == '$')
 		size++;
-	}
 	next_word = malloc(size + 1);
 	size--;
 	while (size >= 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/03 19:12:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/07 22:06:00 by viforget         ###   ########.fr       */
+/*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
+/*   Updated: 2021/09/08 15:32:16 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_command	*boucle(char *order, char **env, t_command *info)
 			}
 			pos++;
 		}
+		if (order[pos] == '.' && order[pos + 1] == '/')
+			info->bin = executable(order + pos, info);
 		if ((order[pos] == ' ' || order[pos] == 9) && info->index == -1)
 			info = set_bin(cutb(text), env, info);
 		else if (order[pos] == '|' && order[pos + 1])
@@ -108,14 +110,23 @@ void	file_new(char *new, char *order, char **env, int s)
 					new[y] = env[find_env(env, next_word(order + x) + 1)][e];
 					e++;
 					y++;
-				}	
-				while (order[x] != 32 && order[x] != 124 && order[x] != 60
-					&& order[x] != 62 && order[x] != 9)
+				}
+				while (ft_if(order[x], order[x + 1], 1))
+				{
 					x++;
+					if (ft_isalnum(order[x]) == 0)
+					{
+						while (ft_if(order[x], order[x + 1], 1))
+						{
+							new[y] = order[x];
+							y++;
+							x++;
+						}
+					}
+				}
 			}
 			else
-				while (order[x] != 32 && order[x] != 124 && order[x] != 60
-					&& order[x] != 62 && order[x] != 9)
+				while (ft_if(order[x], order[x + 1], 1))
 					x++;
 		}
 		else
@@ -148,12 +159,9 @@ char	*change_arg(char *order, char **ev)
 			else if (find_env(ev, next_word(order + pos) + 1) != -1)
 			{
 				s = s + size_arg(ev, find_env(ev, next_word(order + pos) + 1));
-				while (order[pos] != 32 && order[pos] != 124 && order[pos] != 60
-					&& order[pos] != 62 && order[pos] && order[pos] != 9)
-				{
-					pos++;
+				while (ft_isalnum(order[++pos]))
 					s--;
-				}
+				pos++;
 			}
 			else
 				pos++;

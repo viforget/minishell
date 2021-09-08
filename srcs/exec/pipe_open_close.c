@@ -35,9 +35,11 @@ void	pipe_and_open(int fd_n[2], int fd[2], t_command *ins)
 	if (ins->pipe == 1)
 		pipe(fd_n);
 	if (ins->pipe == 2)
-		fd[0] = open(ins->file, 513);
+		fd[0] = open(ins->file,
+				O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (ins->pipe == 3)
-		fd[0] = open(ins->file, 521);
+		fd[0] = open(ins->file, O_WRONLY | O_CREAT | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (ins->guil == 1)
 		fd[1] = open(ins->file_g, O_RDONLY | O_APPEND);
 }

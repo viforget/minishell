@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 16:22:45 by lobertin          #+#    #+#             */
-/*   Updated: 2021/06/14 16:13:27 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:23:05 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		**ft_split(char const *s, char c);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			ft_strcmp(const char *s1, const char *s2);
-int     	get_next_line(int fd, char **line);
+int			get_next_line(int fd, char **line);
 struct		s_list
 {
 	void			*content;
