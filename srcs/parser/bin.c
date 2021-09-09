@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/08 15:23:44 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/08 16:59:12 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,12 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 	info->index = set_index(text);
 	if (info->index == -1 && text[0])
 	{
-		tab = ft_split(env[find_env(env, "PATH")], '=');
-		tab = ft_split(tab[1], ':');
+		tab = ft_split(env[find_env(env, "PATH")] + 5, ':');
 		x = 0;
 		while (tab[x])
 		{
-			path[0] = ft_strjoin("/", text);
-			path[1] = ft_strjoin(tab[x], path[0]);
+			//path[0] = ft_strjoin("/", text);
+			path[1] = ft_strjoin2(tab[x], text);
 			free(path[0]);
 			if (stat(path[1], &stt) == 0)
 			{
