@@ -137,7 +137,7 @@ void		skip_guil_boucle(int *pos, int *x, char *order, char text[1000]);
 // FORNORM_C
 */
 
-void	for_norm(t_command *info, char *order, int *pos, int *x);
+void		for_norm(t_command *info, char *order, int *pos, int *x);
 
 /*
 // MAIN_C
