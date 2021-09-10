@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/08 16:59:12 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/10 13:36:55 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ int	find_env(char **env, char *word)
 
 int	set_index(char *order)
 {
-	if (strcmp(order, "echo") == 0)
+	if (ft_strcmp(order, "echo") == 0)
 		return (1);
-	if (strcmp(order, "pwd") == 0)
+	if (ft_strcmp(order, "pwd") == 0)
 		return (2);
-	if (strcmp(order, "env") == 0)
+	if (ft_strcmp(order, "env") == 0)
 		return (3);
-	if (strcmp(order, "cd") == 0)
+	if (ft_strcmp(order, "cd") == 0)
 		return (4);
-	if (strcmp(order, "export") == 0)
+	if (ft_strcmp(order, "export") == 0)
 		return (5);
-	if (strcmp(order, "unset") == 0)
+	if (ft_strcmp(order, "unset") == 0)
 		return (6);
-	if (strcmp(order, "exit") == 0)
+	if (ft_strcmp(order, "exit") == 0)
 		return (7);
 	return (-1);
 }
@@ -61,6 +61,7 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 
 	path[0] = NULL;
 	path[1] = NULL;
+	printf("[%s]\n", text);
 	info->index = set_index(text);
 	if (info->index == -1 && text[0])
 	{

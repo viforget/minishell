@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/09 14:29:00 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/10 13:39:21 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ t_command	*boucle(char *order, char **env, t_command *info)
 			}
 			pos++;
 		}
-		if (order[pos] == '.' && order[pos + 1] == '/')
-			info->bin = executable(order + pos, info);
 		if ((order[pos] == ' ' || order[pos] == 9) && info->index == -1)
-			info = set_bin(cutb(text), env, info);
+			info = set_bin(text, env, info);
 		else if (order[pos] == '|' && order[pos + 1])
 		{
 			if (info->index == -1)
-				set_bin(cutb(text), env, info);
+				set_bin(text, env, info);
 			x = -1;
 			if (info->pipe == 0)
 				info->pipe = 1;
@@ -62,7 +60,7 @@ t_command	*boucle(char *order, char **env, t_command *info)
 		x++;
 	}
 	if (info->index == -1)
-		set_bin(cutb(text), env, info);
+		set_bin(text, env, info);
 	return (info);
 }
 
@@ -177,6 +175,18 @@ char	*change_arg(char *order, char **ev)
 	return (new);
 }
 
+t_command	*binfinal(t_command *info)
+{
+	if (info->index == -1 && info->av)
+	{
+		info->index = 0;
+		info->bin = ft_strdup(info->av[0]);
+	}
+	if (info->next)	
+		info->next = binfinal(info->next);
+	return (info);
+}
+
 t_command	*parser(char *order, char **env)
 {
 	t_command	*info;
@@ -189,6 +199,7 @@ t_command	*parser(char *order, char **env)
 	boucle(order, env, info);
 	nb_av(info, order);
 	clean(info);
-	//print_struct(info);
+	info = binfinal(info);
+	print_struct(info);
 	return (info);
 }

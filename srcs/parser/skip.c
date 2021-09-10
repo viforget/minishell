@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:05:09 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/08 15:44:40 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/10 09:50:27 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*executable(char *order, t_command *info)
 	int		pos;
 	char	*path;
 
+	printf("%s\n", order);
 	size = 0;
 	while (order[size] != 32 && order[size])
 		size++;
