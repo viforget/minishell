@@ -63,7 +63,6 @@ typedef struct s_var
 */
 
 t_command	*boucle(char *order, char **env, t_command *info);
-int			file_with_g_exit(char *order);
 void		file_new(char *new, char *order, char **env, int s);
 char		*change_arg(char *order, char **ev);
 t_command	*parser(char *order, char **env);
@@ -115,12 +114,30 @@ int			ft_ctoa(unsigned char c);
 char		*verif_guil(char *order);
 
 /*
+// TOOLS3_C
+*/
+
+char		ft_egal(char *order, int x[2]);
+t_command	*binfinal(t_command *info);
+int			file_with_g_exit(char *order);
+char		*executable(char *order, t_command *info);
+int			new_list(t_command *info, char text[1000], int *pos, char *order);
+
+/*
 // SKIP_C
 */
 
 int			skip(char *txt);
 int			skip_hard(char *order);
-char		*executable(char *order, t_command *info);
+int			skip_pos(char *order, int pos);
+void		skip_new(char **env, char *order, char *new, int x[2]);
+void		skip_guil_boucle(int *pos, int *x, char *order, char text[1000]);
+
+/*
+// FORNORM_C
+*/
+
+void	for_norm(t_command *info, char *order, int *pos, int *x);
 
 /*
 // MAIN_C
@@ -147,6 +164,7 @@ void		pipe_and_exit(t_command *ins, int fd[2], int fd_p[2], int pip);
 /*
 // BUILT_IN
 */
+
 int			bi_echo(char **av);
 void		bi_pwd(void);
 char		*ft_strjoin2(char *s1, char *s2);

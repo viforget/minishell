@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   av.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/08 15:18:21 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/10 19:11:42 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,43 @@ int	ft_if(char x, char y, int test)
 	return (0);
 }
 
+int	skip_av(char *order, int *pos, int *x)
+{
+	int	g;
+
+	*x = 0;
+	g = 0;
+	*pos = *pos + skip_hard(order + *pos);
+	while (ft_if(order[*pos], order[*pos - 1], 1))
+	{
+		if (order[*pos] == 34)
+		{
+			g = 2;
+			(*pos)++;
+			while (order[*pos] != 34 && order[(*pos)++])
+			{	
+				*x = *x + 1;
+			}
+		}
+		else
+			*x += 1;
+		(*pos)++;
+	}
+	return (*pos - *x - g);
+}
+
 void	size_av(t_command *info, char *order, int size)
 {
 	int	pos;
 	int	x;
 	int	y;
 	int	save;
-	int	g;
 
 	y = 0;
 	pos = 0;
 	while (order[pos] != '|' && order[pos] && size--)
 	{
-		x = 0;
-		g = 0;
-		pos = pos + skip_hard(order + pos);
-		while (ft_if(order[pos], order[pos - 1], 1))
-		{
-			if (order[pos] == 34)
-			{
-				g = 2;
-				pos++;
-				while (order[pos] != 34 && order[pos++])
-					x++;
-			}
-			else
-				x++;
-			pos++;
-		}
-		save = pos - x - g;
+		save = skip_av(order, &pos, &x);
 		info->av[y] = malloc(sizeof(char *) * x + 1);
 		remplir(info->av[y], order + save, x);
 		y++;
@@ -74,16 +82,7 @@ int	nb_word(char *order)
 		pos++;
 	while (order[pos] != '|' && order[pos])
 	{
-		while (ft_if(order[pos], order[pos + 1], 1))
-		{
-			if (order[pos] == 34)
-			{
-				pos++;
-				while (order[pos] != 34)
-					pos++;
-			}
-			pos++;
-		}
+		pos = skip_pos(order, pos);
 		x++;
 		while ((order[pos] == ' ' || order[pos] == 9
 				|| order[pos] == '<' || order[pos] == '>') && order[pos])

@@ -6,13 +6,11 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/10 13:39:21 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/10 20:03:34 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_struct(t_command *st);
 
 t_command	*boucle(char *order, char **env, t_command *info)
 {
@@ -27,114 +25,67 @@ t_command	*boucle(char *order, char **env, t_command *info)
 		text[x] = order[pos];
 		text[x + 1] = '\0';
 		if (order[pos] == 34)
-		{
-			pos++;
-			x++;
-			while (order[pos] != 34 && order[pos])
-			{
-				text[x] = order[pos];
-				text[x + 1] = '\0';
-				pos++;
-				x++;
-			}
-			pos++;
-		}
+			skip_guil_boucle(&pos, &x, order, text);
 		if ((order[pos] == ' ' || order[pos] == 9) && info->index == -1)
-			info = set_bin(text, env, info);
+			info = set_bin(cutb(text), env, info);
 		else if (order[pos] == '|' && order[pos + 1])
 		{
 			if (info->index == -1)
-				set_bin(text, env, info);
-			x = -1;
-			if (info->pipe == 0)
-				info->pipe = 1;
-			info->next = mal_maillon();
-			info = info->next;
-			while (order[pos] == '|')
-				pos++;
-			pos--;
-			text[0] = '\0';
+				set_bin(cutb(text), env, info);
+			x = new_list(info, text, &pos, order);
 		}
-		setg(info, order, pos);
-		pos++;
-		x++;
+		for_norm(info, order, &pos, &x);
 	}
 	if (info->index == -1)
-		set_bin(text, env, info);
+		set_bin(cutb(text), env, info);
 	return (info);
-}
-
-int	file_with_g_exit(char *order)
-{
-	int		i;
-	char	*str;
-
-	i = g_exit;
-	str = ft_itoa(i);
-	i = 0;
-	while (str[i])
-	{
-		order[i] = str[i];
-		i++;
-	}
-	return (strlen(str));
 }
 
 void	file_new(char *new, char *order, char **env, int s)
 {
-	int	x;
-	int	y;
-	int	e;
+	int	x[2];
 
-	x = 0;
-	y = 0;
-	while (x < s)
+	x[0] = 0;
+	x[1] = 0;
+	while (x[0] < s)
 	{
-		if (order[x] == 36)
+		if (order[x[0]] == 36)
 		{
-			if (order[x + 1] == 63)
+			if (order[x[0] + 1] == 63)
 			{
-				y = y + file_with_g_exit(new + y);
-				x = x + 2;
+				x[1] = x[1] + file_with_g_exit(new + x[1]);
+				x[0] = x[0] + 2;
 			}
-			else if (find_env(env, next_word(order + x) + 1) != -1)
-			{
-				e = 0;
-				while (env[find_env(env, next_word(order + x) + 1)][e] != 61)
-					e++;
-				e++;
-				while (env[find_env(env, next_word(order + x) + 1)][e])
-				{
-					new[y] = env[find_env(env, next_word(order + x) + 1)][e];
-					e++;
-					y++;
-				}
-				while (ft_if(order[x], order[x + 1], 1))
-				{
-					x++;
-					if (ft_isalnum(order[x]) == 0)
-					{
-						while (ft_if(order[x], order[x + 1], 1))
-						{
-							new[y] = order[x];
-							y++;
-							x++;
-						}
-					}
-				}
-			}
+			else if (find_env(env, next_word(order + x[0]) + 1) != -1)
+				skip_new(env, order, new, x);
 			else
-				while (ft_if(order[x], order[x + 1], 1))
-					x++;
+			{
+				while (ft_if(order[x[0]], order[x[0] + 1], 1))
+					x[0]++;
+			}
 		}
 		else
-		{
-			new[y] = order[x];
-			y++;
-			x++;
-		}
+			new[x[1] - 1] = ft_egal(order, x);
 	}
-	new[y] = '\0';
+	new[x[1]] = '\0';
+}
+
+void	ft_condition(char *order, int *pos, int *s, char **ev)
+{
+	if (order[*pos + 1] == '?')
+	{
+		*s = *s + ft_ctoa(g_exit);
+		(*pos)++;
+	}
+	else if (find_env(ev, next_word(order + *pos) + 1) != -1)
+	{
+		*s = *s + size_arg(ev, find_env(ev, next_word(order + *pos) + 1));
+		while (ft_isalnum(order[++(*pos)]))
+			s--;
+		pos++;
+	}
+	else
+		pos++;
 }
 
 char	*change_arg(char *order, char **ev)
@@ -148,22 +99,7 @@ char	*change_arg(char *order, char **ev)
 	while (order[pos])
 	{
 		if (order[pos] == '$')
-		{
-			if (order[pos + 1] == '?')
-			{
-				s = s + ft_ctoa(g_exit);
-				pos++;
-			}
-			else if (find_env(ev, next_word(order + pos) + 1) != -1)
-			{
-				s = s + size_arg(ev, find_env(ev, next_word(order + pos) + 1));
-				while (ft_isalnum(order[++pos]))
-					s--;
-				pos++;
-			}
-			else
-				pos++;
-		}
+			ft_condition(order, &pos, &s, ev);
 		else
 		{
 			s++;
@@ -173,18 +109,6 @@ char	*change_arg(char *order, char **ev)
 	new = malloc(s + 1);
 	file_new(new, order, ev, s + 1);
 	return (new);
-}
-
-t_command	*binfinal(t_command *info)
-{
-	if (info->index == -1 && info->av)
-	{
-		info->index = 0;
-		info->bin = ft_strdup(info->av[0]);
-	}
-	if (info->next)	
-		info->next = binfinal(info->next);
-	return (info);
 }
 
 t_command	*parser(char *order, char **env)
@@ -200,6 +124,5 @@ t_command	*parser(char *order, char **env)
 	nb_av(info, order);
 	clean(info);
 	info = binfinal(info);
-	print_struct(info);
 	return (info);
 }

@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/10 13:36:55 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/10 15:24:04 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ int	set_index(char *order)
 t_command	*set_bin(char *text, char **env, t_command *info)
 {
 	int			x;
-	char		*path[2];
+	char		*path;
 	char		**tab;
 	struct stat	stt;
 
-	path[0] = NULL;
-	path[1] = NULL;
-	printf("[%s]\n", text);
+	path = NULL;
 	info->index = set_index(text);
 	if (info->index == -1 && text[0])
 	{
@@ -69,16 +67,14 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 		x = 0;
 		while (tab[x])
 		{
-			//path[0] = ft_strjoin("/", text);
-			path[1] = ft_strjoin2(tab[x], text);
-			free(path[0]);
-			if (stat(path[1], &stt) == 0)
+			path = ft_strjoin2(tab[x], text);
+			if (stat(path, &stt) == 0)
 			{
 				info->index = 0;
-				info->bin = path[1];
+				info->bin = path;
 				return (info);
 			}
-			free(path[1]);
+			free(path);
 			x++;
 		}
 	}

@@ -14,6 +14,8 @@ SRCS =	srcs/prompt/main.c\
 		srcs/parser/cut.c\
 		srcs/parser/tools.c\
 		srcs/parser/tools2.c\
+		srcs/parser/tools3.c\
+		srcs/parser/fornorm.c\
 		srcs/parser/skip.c\
 		srcs/built_in/cd.c\
 		srcs/built_in/echo.c\
@@ -27,6 +29,7 @@ SRCS =	srcs/prompt/main.c\
 		srcs/exec/execution.c\
 		srcs/utils/exit_error.c\
 		srcs/utils/print_struct.c\
+
 
 OBJ = $(SRCS:%.c=%.o)
 
