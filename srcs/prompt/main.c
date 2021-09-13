@@ -28,14 +28,12 @@ void	sig_m(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else
-		printf("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m   \b\b");
 }
 
 char	*new_line(void)
 {
 	signal(SIGINT, sig_m);
-	signal(SIGQUIT, sig_m);
+	signal(SIGQUIT, SIG_IGN);
 	rl_on_new_line();
 	return (readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m "));
 }
