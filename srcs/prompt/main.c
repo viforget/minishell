@@ -17,6 +17,9 @@ void	free_command(t_command *st)
 		free(st->file);
 	if (st->file_g)
 		free(st->file_g);
+	if (st->next)
+		free_command(st->next);
+	free(st);
 }
 
 void	sig_m(int sig)
@@ -54,13 +57,13 @@ int	main(int ac, char **av, char **env)
 			add_history(str);
 			if (str[0])
 			{
-				command = parser(str, env);
+				command = parser(ft_strdup(str), env);
 				free(str);
 				env = recurs_pipe(command, NULL, 0, env);
+				free_command(command);
 			}
 			else
 				free(str);
-			free_command(command);
 		}
 	}
 	rl_clear_history();

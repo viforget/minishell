@@ -79,6 +79,7 @@ char		*cutb(char *txt);
 // BIN_C
 */
 
+int			use_find(char **env, char *str);
 int			find_env(char **env, char *word);
 int			set_index(char *order);
 t_command	*set_bin(char *text, char **env, t_command *info);

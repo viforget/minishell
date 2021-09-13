@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 15:05:49 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:20:32 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	file_new(char *new, char *order, char **env, int s)
 				x[1] = x[1] + file_with_g_exit(new + x[1]);
 				x[0] = x[0] + 2;
 			}
-			else if (find_env(env, next_word(order + x[0]) + 1) != -1)
+			else if (use_find(env, next_word(order + x[0])) != -1)
 				skip_new(env, order, new, x);
 			else
 			{
@@ -72,20 +72,24 @@ void	file_new(char *new, char *order, char **env, int s)
 
 void	ft_condition(char *order, int *pos, int *s, char **ev)
 {
+	char *str;
+
+	str = next_word(order + *pos);
 	if (order[*pos + 1] == '?')
 	{
 		*s = *s + ft_ctoa(g_exit);
 		(*pos)++;
 	}
-	else if (find_env(ev, next_word(order + *pos) + 1) != -1)
+	else if (find_env(ev, str + 1) != -1)
 	{
-		*s = *s + size_arg(ev, find_env(ev, next_word(order + *pos) + 1));
+		*s = *s + size_arg(ev, find_env(ev, str + 1));
 		while (ft_isalnum(order[++(*pos)]))
 			s--;
-		pos++;
+		(*pos)++;
 	}
 	else
-		pos++;
+		(*pos)++;
+	free(str);
 }
 
 char	*change_arg(char *order, char **ev)
@@ -99,7 +103,9 @@ char	*change_arg(char *order, char **ev)
 	while (order[pos])
 	{
 		if (order[pos] == '$')
+		{
 			ft_condition(order, &pos, &s, ev);
+		}
 		else
 		{
 			s++;
@@ -108,6 +114,7 @@ char	*change_arg(char *order, char **ev)
 	}
 	new = malloc(s + 1);
 	file_new(new, order, ev, s + 1);
+	free(order);
 	return (new);
 }
 
@@ -124,5 +131,6 @@ t_command	*parser(char *order, char **env)
 	nb_av(info, order);
 	clean(info);
 	info = binfinal(info);
+	free(order);
 	return (info);
 }

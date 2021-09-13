@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   av.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 15:00:34 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:10:29 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	size_av(t_command *info, char *order, int size)
 		y++;
 	}
 	info->av[y] = NULL;
+	free(order);
 }
 
 int	nb_word(char *order)

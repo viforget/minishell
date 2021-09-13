@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 15:00:52 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:19:25 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	use_find(char **env, char *word)
+{
+	int	nb;
+	
+	nb = find_env(env, word + 1);
+	free(word);
+	return (nb);
+}
 
 int	find_env(char **env, char *word)
 {
@@ -72,11 +81,15 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 			{
 				info->index = 0;
 				info->bin = path;
+				free_env(tab);
+				free(text);
 				return (info);
 			}
 			free(path);
 			x++;
 		}
+		free_env(tab);
 	}
+	free(text);
 	return (info);
 }

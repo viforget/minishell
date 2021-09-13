@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 19:12:38 by viforget          #+#    #+#             */
-/*   Updated: 2021/09/13 15:05:51 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:06:24 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	file_with_g_exit(char *order)
 		order[i] = str[i];
 		i++;
 	}
-	return (strlen(str));
+	i = strlen(str);
+	free(str);
+	return (i);
 }
 
 char	*executable(char *order, t_command *info)

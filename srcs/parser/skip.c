@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:05:09 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/10 19:49:51 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/13 20:00:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,20 @@ int	skip_pos(char *order, int pos)
 void	skip_new(char **env, char *order, char *new, int x[2])
 {
 	int	e;
+	char *s;
 
 	e = 0;
-	while (env[find_env(env, next_word(order + x[0]) + 1)][e] != 61)
+	s = next_word(order + x[0]);
+	while (env[find_env(env, s + 1)][e] != 61)
 		e++;
 	e++;
-	while (env[find_env(env, next_word(order + x[0]) + 1)][e])
+	while (env[find_env(env, s + 1)][e])
 	{
-		new[x[1]] = env[find_env(env, next_word(order + x[0]) + 1)][e];
+		new[x[1]] = env[find_env(env, s + 1)][e];
 		e++;
 		x[1]++;
 	}
+	free(s);
 	while (ft_if(order[x[0]], order[x[0] + 1], 1))
 	{
 		x[0]++;

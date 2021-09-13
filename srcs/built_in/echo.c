@@ -22,5 +22,6 @@ int	bi_echo(char **av)
 	}
 	if (n == 0)
 		printf("%c", '\n');
+	g_exit = 0;
 	return (1);
 }
