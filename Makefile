@@ -28,8 +28,6 @@ SRCS =	srcs/prompt/main.c\
 		srcs/exec/pipe_open_close.c\
 		srcs/exec/execution.c\
 		srcs/utils/exit_error.c\
-		srcs/utils/print_struct.c\
-
 
 OBJ = $(SRCS:%.c=%.o)
 

@@ -1,11 +1,5 @@
 #include "minishell.h"
 
-void	sig_p(int sig)
-{
-	printf("\b\b  \b\b");
-	exit(0);
-}
-
 char	**exec_built_in(t_command *ins, char **av, char **env)
 {
 	g_exit = 0;
@@ -41,14 +35,17 @@ void	execution(t_command *ins, char **env)
 
 char	**end_recurs(t_command *ins, int fd_n[2], char **env, int fk)
 {
+	int	tmp;
+
 	if (ins->next)
 		recurs_pipe(ins->next, fd_n, ins->pipe, env);
 	if (ins->pipe == 1)
 		double_close(fd_n);
 	if (ins->index <= 3 && ins->index > -1)
 	{
-		waitpid(fk, &g_exit, 0);
-		g_exit = g_exit / 256;
+		waitpid(fk, &tmp, 0);
+		if (g_exit == 0)
+			g_exit = tmp / 256;
 	}
 	return (env);
 }
@@ -73,7 +70,7 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 			execution(ins, env);
 		}
 		else
-			signal(SIGINT, sig_p);
+			signal_p_set(fk);
 	}
 	else if (ins->av && ins->av[0])
 		g_exit = exit_error(ins->av[0], "command not found", 127, 0);

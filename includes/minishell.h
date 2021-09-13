@@ -152,6 +152,12 @@ void		free_command(t_command *st);
 char		**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 
 /*
+// EXECUTION_C
+*/
+
+void	signal_p_set(int fk);
+
+/*
 // PIPE_OPEN_CLOSE_C
 */
 
