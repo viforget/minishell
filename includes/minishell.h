@@ -121,7 +121,7 @@ char		ft_egal(char *order, int x[2]);
 t_command	*binfinal(t_command *info);
 int			file_with_g_exit(char *order);
 char		*executable(char *order, t_command *info);
-int			new_list(t_command *info, char text[1000], int *pos, char *order);
+int			new_list(t_command **info, char text[1000], int *pos, char *order);
 
 /*
 // SKIP_C
@@ -155,7 +155,7 @@ char		**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env);
 // EXECUTION_C
 */
 
-void	signal_p_set(int fk);
+void		signal_p_set(int fk);
 
 /*
 // PIPE_OPEN_CLOSE_C

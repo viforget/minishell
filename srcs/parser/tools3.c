@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 19:12:38 by viforget          #+#    #+#             */
-/*   Updated: 2021/09/10 20:04:16 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:05:51 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*executable(char *order, t_command *info)
 	int		pos;
 	char	*path;
 
-	printf("%s\n", order);
 	size = 0;
 	while (order[size] != 32 && order[size])
 		size++;
@@ -69,12 +68,12 @@ char	*executable(char *order, t_command *info)
 	return (path);
 }
 
-int	new_list(t_command *info, char text[1000], int *pos, char *order)
+int	new_list(t_command **info, char text[1000], int *pos, char *order)
 {
-	if (info->pipe == 0)
-		info->pipe = 1;
-	info->next = mal_maillon();
-	info = info->next;
+	if ((*info)->pipe == 0)
+		(*info)->pipe = 1;
+	(*info)->next = mal_maillon();
+	(*info) = (*info)->next;
 	while (order[*pos] == '|')
 		(*pos)++;
 	(*pos)--;

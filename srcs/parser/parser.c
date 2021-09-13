@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/10 20:03:34 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:05:49 by lobertin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_command	*boucle(char *order, char **env, t_command *info)
 		{
 			if (info->index == -1)
 				set_bin(cutb(text), env, info);
-			x = new_list(info, text, &pos, order);
+			x = new_list(&info, text, &pos, order);
 		}
 		for_norm(info, order, &pos, &x);
 	}
