@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 20:19:25 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/14 15:08:41 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	use_find(char **env, char *word)
 {
 	int	nb;
-	
+
 	nb = find_env(env, word + 1);
 	free(word);
 	return (nb);
@@ -61,6 +61,15 @@ int	set_index(char *order)
 	return (-1);
 }
 
+t_command	*ft_info(t_command *info, char *path, char **tab, char *text)
+{
+	info->index = 0;
+	info->bin = path;
+	free_env(tab);
+	free(text);
+	return (info);
+}
+
 t_command	*set_bin(char *text, char **env, t_command *info)
 {
 	int			x;
@@ -78,13 +87,7 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 		{
 			path = ft_strjoin2(tab[x], text);
 			if (stat(path, &stt) == 0)
-			{
-				info->index = 0;
-				info->bin = path;
-				free_env(tab);
-				free(text);
-				return (info);
-			}
+				return (ft_info(info, path, tab, text));
 			free(path);
 			x++;
 		}

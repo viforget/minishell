@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 20:20:32 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/14 15:09:26 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	file_new(char *new, char *order, char **env, int s)
 
 void	ft_condition(char *order, int *pos, int *s, char **ev)
 {
-	char *str;
+	char	*str;
 
 	str = next_word(order + *pos);
 	if (order[*pos + 1] == '?')
