@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 19:12:38 by viforget          #+#    #+#             */
-/*   Updated: 2021/09/13 20:06:24 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/15 11:39:05 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_command	*binfinal(t_command *info)
 	if (info->index == -1 && info->av)
 	{
 		info->index = 0;
-		info->bin = ft_strdup(info->av[0]);
+		if (info->av[0])
+			info->bin = ft_strdup(info->av[0]);
 	}
 	if (info->next)
 		info->next = binfinal(info->next);
@@ -39,7 +40,7 @@ int	file_with_g_exit(char *order)
 	int		i;
 	char	*str;
 
-	i = g_exit;
+	i = g_glob.exit;
 	str = ft_itoa(i);
 	i = 0;
 	while (str[i])

@@ -32,6 +32,13 @@ int	check_in_env(char *str, char **env)
 	return (-1);
 }
 
+char	**minus_one(char **env, int i, char *str)
+{
+	free (env[i]);
+	env[i] = ft_strdup(str);
+	return (env);
+}
+
 char	**ad_arg_exp(char **env, char *str)
 {
 	char	**env2;
@@ -41,14 +48,11 @@ char	**ad_arg_exp(char **env, char *str)
 	if (i == -2)
 		return (env);
 	if (i != -1)
-	{
-		free (env[i]);
-		env[i] = ft_strdup(str);
-		return (env);
-	}
+		return (minus_one(env, i, str));
 	else
 	{
-		env2 = malloc(sizeof(char *) * tablen(env) + 2);
+		i = 0;
+		env2 = malloc(sizeof(char *) * (tablen(env) + 2));
 		while (env[i])
 		{
 			env2[i] = env[i];

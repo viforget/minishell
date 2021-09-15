@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 06:09:07 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/08 15:05:46 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:00:09 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	remplir(char *dest, char *txt, int x)
 	z = 0;
 	while (z < x)
 	{
-		if (txt[y] != 34)
+		if (txt[y] != 34 && txt[y] != 39)
 		{
 			dest[z] = txt[y];
 			z++;

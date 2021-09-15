@@ -6,21 +6,21 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:05:09 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/14 15:14:19 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/14 17:31:56 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	skip(char *txt)
+int	skip(char *txt, char exmpl)
 {
 	int	pos;
 
 	pos = 0;
-	if (txt[pos] == 34)
+	if (txt[pos] == exmpl)
 	{
 		pos++;
-		while (txt[pos] != 34)
+		while (txt[pos] != exmpl)
 			pos++;
 	}
 	return (pos);
@@ -58,6 +58,14 @@ int	skip_pos(char *order, int pos)
 			while (order[pos] != 34)
 				pos++;
 		}
+		else if (order[pos] == 39)
+		{
+			pos++;
+			while (order[pos] != 39)
+			{	
+				pos++;
+			}
+		}
 		pos++;
 	}
 	return (pos);
@@ -87,16 +95,16 @@ void	skip_new(char **env, char *order, char *new, int x[2])
 	}
 }
 
-void	skip_guil_boucle(int *pos, int *x, char *order, char text[1000])
+void	skip_guill_boucle(int x[2], char *order, char text[1000], char exp)
 {
-	(*pos)++;
-	(*x)++;
-	while (order[*pos] != 34 && order[*pos])
+	x[1]++;
+	x[0]++;
+	while (order[x[1]] != exp && order[x[1]])
 	{
-		text[*x] = order[*pos];
+		text[*x] = order[x[1]];
 		text[*x + 1] = '\0';
-		(*pos)++;
-		(*x)++;
+		x[1]++;
+		x[0]++;
 	}
-	(*pos)++;
+	x[1]++;
 }

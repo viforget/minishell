@@ -21,7 +21,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 		if (home != -1)
 			s = ft_strdup(env[home] + 5);
 		else
-			g_exit = exit_error("cd", "HOME not set", 1, 0);
+			g_glob.exit = exit_error("cd", "HOME not set", 1, 0);
 	}
 	else if (ft_strncmp(str, "-", 2) == 0)
 	{
@@ -31,7 +31,7 @@ char	*check_pwd(char *str, char **env, int opwd, int home)
 			printf("%s\n", env[opwd] + 7);
 		}
 		else
-			g_exit = exit_error("cd", "OLDPWD not set", 1, 0);
+			g_glob.exit = exit_error("cd", "OLDPWD not set", 1, 0);
 	}
 	else
 		s = ft_strdup(str);
@@ -66,7 +66,7 @@ char	**bi_cd(char *str, char **env)
 	if (!s)
 		return (env);
 	if (chdir(s) == -1)
-		g_exit = exit_error(s, "No such file or directory", 1, 4);
+		g_glob.exit = exit_error(s, "No such file or directory", 1, 4);
 	else
 		cd_env(env, i);
 	free(s);

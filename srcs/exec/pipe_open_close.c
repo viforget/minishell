@@ -32,7 +32,7 @@ void	opcl_pipe(t_command *ins, int fd_p[2], int fd_n[2], int fd[2])
 
 void	pipe_and_open(int fd_n[2], int fd[2], t_command *ins)
 {
-	g_exit = 0;
+	g_glob.exit = 0;
 	if (ins->pipe == 1)
 		pipe(fd_n);
 	if (ins->pipe == 2)

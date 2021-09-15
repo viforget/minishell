@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:36:24 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 19:10:29 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/15 14:51:55 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ int	ft_if(char x, char y, int test)
 		if (x && (x != ' ' || x != 9 || ((y == '<' || y == '>') && x == ' ')))
 			return (1);
 	}
-	if (test == 1)
+	else if (test == 1)
 	{
 		if (x != 32 && x != 124 && x != 60 && x != 62 && x != 9 && x)
+			return (1);
+	}
+	else if (test == 2)
+	{
+		if (x == 32 || x == 124 || x == 60 || x == 62 || x == 9 || !x)
 			return (1);
 	}
 	return (0);
@@ -29,21 +34,21 @@ int	ft_if(char x, char y, int test)
 
 int	skip_av(char *order, int *pos, int *x)
 {
-	int	g;
+	int		g;
+	char	guil;
 
 	*x = 0;
 	g = 0;
 	*pos = *pos + skip_hard(order + *pos);
 	while (ft_if(order[*pos], order[*pos - 1], 1))
 	{
-		if (order[*pos] == 34)
+		if (order[*pos] == 34 || order[*pos] == 39)
 		{
-			g = 2;
+			guil = order[*pos];
+			g = g + 2;
 			(*pos)++;
-			while (order[*pos] != 34 && order[(*pos)++])
-			{	
+			while (order[*pos] != guil && order[(*pos)++])
 				*x = *x + 1;
-			}
 		}
 		else
 			*x += 1;
@@ -85,8 +90,8 @@ int	nb_word(char *order)
 	{
 		pos = skip_pos(order, pos);
 		x++;
-		while ((order[pos] == ' ' || order[pos] == 9
-				|| order[pos] == '<' || order[pos] == '>') && order[pos])
+		while (order[pos] == ' ' || order[pos] == 9
+			|| order[pos] == '<' || order[pos] == '>')
 		{
 			if (order[pos] == '<' || order[pos] == '>')
 				x--;
@@ -108,11 +113,11 @@ void	nb_av(t_command *maillon, char *order)
 	{
 		x = nb_word(order + pos);
 		maillon->av = malloc(sizeof(char *) * x + 1);
-		size_av(maillon, cut(order + (pos)), x);
+		size_av(maillon, cut(order + pos), x);
 		while (order[pos] != '|' && order[pos])
 		{
-			if (order[pos] == 34)
-				pos = pos + skip(order + pos);
+			if (order[pos] == 34 || order[pos] == 39)
+				pos = pos + skip(order + pos, order[pos]);
 			pos++;
 		}
 		while (order[pos] == '|' && order[pos])

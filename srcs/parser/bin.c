@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:35:20 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/14 15:08:41 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:56:10 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_command	*set_bin(char *text, char **env, t_command *info)
 
 	path = NULL;
 	info->index = set_index(text);
-	if (info->index == -1 && text[0])
+	if (info->index == -1 && text[0] && find_env(env, "PATH") != -1)
 	{
 		tab = ft_split(env[find_env(env, "PATH")] + 5, ':');
 		x = 0;

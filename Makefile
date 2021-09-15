@@ -15,6 +15,7 @@ SRCS =	srcs/prompt/main.c\
 		srcs/parser/tools.c\
 		srcs/parser/tools2.c\
 		srcs/parser/tools3.c\
+		srcs/parser/tools4.c\
 		srcs/parser/fornorm.c\
 		srcs/parser/skip.c\
 		srcs/built_in/cd.c\

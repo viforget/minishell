@@ -6,7 +6,7 @@
 /*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:17:47 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/14 15:09:26 by viforget         ###   ########.fr       */
+/*   Updated: 2021/09/15 15:35:33 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,26 @@
 
 t_command	*boucle(char *order, char **env, t_command *info)
 {
-	int			pos;
-	int			x;
+	int			x[2];
 	char		text[1000];
 
-	pos = 0;
-	x = 0;
-	while (order[pos])
+	x[0] = 0;
+	x[1] = 0;
+	while (order[x[1]])
 	{
-		text[x] = order[pos];
-		text[x + 1] = '\0';
-		if (order[pos] == 34)
-			skip_guil_boucle(&pos, &x, order, text);
-		if ((order[pos] == ' ' || order[pos] == 9) && info->index == -1)
+		text[x[0]] = order[x[1]];
+		text[x[0] + 1] = '\0';
+		if (order[x[1]] == 34 || order[x[1]] == 39)
+			skip_guill_boucle(x, order, text, order[x[1]]);
+		if ((order[x[1]] == ' ' || order[x[1]] == 9) && info->index == -1)
 			info = set_bin(cutb(text), env, info);
-		else if (order[pos] == '|' && order[pos + 1])
+		else if (order[x[1]] == '|' && order[x[1] + 1])
 		{
 			if (info->index == -1)
 				set_bin(cutb(text), env, info);
-			x = new_list(&info, text, &pos, order);
+			x[0] = new_list(&info, text, x, order);
 		}
-		for_norm(info, order, &pos, &x);
+		for_norm(info, order, x);
 	}
 	if (info->index == -1)
 		set_bin(cutb(text), env, info);
@@ -49,20 +48,16 @@ void	file_new(char *new, char *order, char **env, int s)
 	x[1] = 0;
 	while (x[0] < s)
 	{
-		if (order[x[0]] == 36)
+		if (order[x[0]] == 39)
 		{
-			if (order[x[0] + 1] == 63)
-			{
-				x[1] = x[1] + file_with_g_exit(new + x[1]);
-				x[0] = x[0] + 2;
-			}
-			else if (use_find(env, next_word(order + x[0])) != -1)
-				skip_new(env, order, new, x);
-			else
-			{
-				while (ft_if(order[x[0]], order[x[0] + 1], 1))
-					x[0]++;
-			}
+			new[x[1]++] = order[x[0]++];
+			while (order[x[0]] != 39)
+				new[x[1]++] = order[x[0]++];
+			new[x[1]++] = order[x[0]++];
+		}
+		else if (order[x[0]] == 36)
+		{
+			loop_norm(order, new, x, env);
 		}
 		else
 			new[x[1] - 1] = ft_egal(order, x);
@@ -77,7 +72,7 @@ void	ft_condition(char *order, int *pos, int *s, char **ev)
 	str = next_word(order + *pos);
 	if (order[*pos + 1] == '?')
 	{
-		*s = *s + ft_ctoa(g_exit);
+		*s = *s + ft_ctoa(g_glob.exit);
 		(*pos)++;
 	}
 	else if (find_env(ev, str + 1) != -1)
@@ -102,10 +97,10 @@ char	*change_arg(char *order, char **ev)
 	s = 0;
 	while (order[pos])
 	{
-		if (order[pos] == '$')
-		{
+		if (order[pos] == 39)
+			loop_ch_arg(&pos, &s, order);
+		else if (order[pos] == '$' && order[pos + 1])
 			ft_condition(order, &pos, &s, ev);
-		}
 		else
 		{
 			s++;
@@ -122,10 +117,12 @@ t_command	*parser(char *order, char **env)
 {
 	t_command	*info;
 
+	if (order[0] == '\t')
+		order[0] = ' ';
 	info = mal_maillon();
 	order = change_arg(order, env);
 	order = verif_guil(order);
-	if (order[0] < 32 && order[0] != 9)
+	if (!(order) || order[0] < 32 || order[0] == 9)
 		return (info);
 	boucle(order, env, info);
 	nb_av(info, order);

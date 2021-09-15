@@ -2,7 +2,6 @@
 
 char	**exec_built_in(t_command *ins, char **av, char **env)
 {
-	g_exit = 0;
 	if (ins->index == 1)
 		bi_echo(av);
 	if (ins->index == 2)
@@ -25,12 +24,12 @@ void	execution(t_command *ins, char **env)
 	if (ins->index == 0)
 	{
 		execve(ins->bin, ins->av, env);
-		g_exit = exit_error(ins->av[0], "command not found", 127, 0);
+		g_glob.exit = exit_error(ins->av[0], "command not found", 127, 0);
 	}
 	exec_built_in(ins, ins->av, env);
 	free_command(ins);
 	free_env(env);
-	exit(0);
+	exit(g_glob.exit);
 }
 
 char	**end_recurs(t_command *ins, int fd_n[2], char **env, int fk)
@@ -44,8 +43,8 @@ char	**end_recurs(t_command *ins, int fd_n[2], char **env, int fk)
 	if (ins->index <= 3 && ins->index > -1)
 	{
 		waitpid(fk, &tmp, 0);
-		if (g_exit == 0)
-			g_exit = tmp / 256;
+		if (g_glob.exit == 0)
+			g_glob.exit = tmp / 256;
 	}
 	return (env);
 }
@@ -73,7 +72,7 @@ char	**recurs_pipe(t_command *ins, int fd_p[2], int pip, char **env)
 			signal_p_set(fk);
 	}
 	else if (ins->av && ins->av[0])
-		g_exit = exit_error(ins->av[0], "command not found", 127, 0);
+		g_glob.exit = exit_error(ins->av[0], "command not found", 127, 0);
 	pipe_and_exit(ins, fd, fd_p, pip);
 	return (end_recurs(ins, fd_n, env, fk));
 }

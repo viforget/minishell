@@ -13,8 +13,6 @@
 
 # include	"../lib/libft/libft.h"
 
-int	g_exit;
-
 /*
 // index value:
 //  f  0 : binary
@@ -58,6 +56,14 @@ typedef struct s_var
 	struct s_var	*next;
 }				t_var;
 
+typedef struct s_glob
+{
+	int				exit;
+	int				fk;
+}				t_glob;
+
+t_glob	g_glob;
+
 /*
 // PARSER_C
 */
@@ -91,7 +97,6 @@ t_command	*set_bin(char *text, char **env, t_command *info);
 int			ft_if(char x, char y, int test);
 void		size_av(t_command *info, char *order, int size);
 int			nb_word(char *order);
-int			skip(char *txt);
 void		nb_av(t_command *maillon, char *order);
 
 /*
@@ -125,21 +130,28 @@ char		*executable(char *order, t_command *info);
 int			new_list(t_command **info, char text[1000], int *pos, char *order);
 
 /*
+// TOOLS4_C
+*/
+
+void		loop_norm(char *order, char *new, int x[2], char **env);
+void		loop_ch_arg(int *pos, int *s, char *order);
+
+/*
 // SKIP_C
 */
 
-int			skip(char *txt);
+int			skip(char *txt, char exmpl);
 int			skip_hard(char *order);
 int			skip_pos(char *order, int pos);
 void		skip_new(char **env, char *order, char *new, int x[2]);
-void		skip_guil_boucle(int *pos, int *x, char *order, char text[1000]);
+void		skip_guill_boucle(int x[2], char *order, char text[1000], char exp);
 
 /*
 // FORNORM_C
 */
 
 void		cond_loop(char *order, int x[2], char *new);
-void		for_norm(t_command *info, char *order, int *pos, int *x);
+void		for_norm(t_command *info, char *order, int x[2]);
 
 /*
 // MAIN_C

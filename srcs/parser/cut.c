@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cut.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lobertin <lobertin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: viforget <viforget@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 05:32:28 by lobertin          #+#    #+#             */
-/*   Updated: 2021/09/13 15:00:53 by lobertin         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:26:52 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ char	*cut(char *text)
 	int		x;
 	int		y;
 	int		z;
-	int		i;
 
 	x = 0;
-	while (text[x] == ' ' || text[x] == 9 || text[x] == '|')
+	while ((text[x] == ' ' || text[x] == 9 || text[x] == '|') && text[x])
 		x++;
 	y = 0;
 	z = x;
@@ -31,10 +30,10 @@ char	*cut(char *text)
 		x++;
 	}
 	final = malloc(sizeof(char) * y + 1);
-	i = 0;
+	x = 0;
 	while (y--)
-		final[i++] = text[z++];
-	final[i] = '\0';
+		final[x++] = text[z++];
+	final[x] = '\0';
 	return (final);
 }
 
@@ -56,7 +55,7 @@ char	*cutg(char *text)
 	x = 0;
 	while (ft_if(text[z], text[z - 1], 1) || guil == -1)
 	{
-		if (text[z] != 34)
+		if (text[z] != 34 || text[z] != 39)
 			final[x++] = text[z];
 		else
 			guil = guil * -1;
@@ -77,9 +76,9 @@ char	*cutb(char *txt)
 	posf = 0;
 	while (txt[pos] == ' ' || txt[pos] == 9)
 		pos++;
-	while (ft_if(txt[pos], txt[pos + 1], 1))
+	while (ft_if(txt[pos], txt[pos + 1], 1) == 1)
 	{
-		if (txt[pos] == 34)
+		if (txt[pos] == 34 || txt[pos] == 39)
 			pos++;
 		final[posf] = txt[pos];
 		pos++;

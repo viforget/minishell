@@ -50,9 +50,9 @@ SRCNAME     =   ft_memset.c         \
                 ft_putnbr_fd.c      \
                 ft_putnbr_base.c    \
                 ft_split.c          \
-               	get_next_line.c           \
-##               ft_itoa_base.c      \
-##               ft_itoa_bases.c     \
+               	get_next_line.c     \
+##               ft_itoa_base.c     \
+##               ft_itoa_bases.c    \
 
 OBJS		=	${SRCNAME:.c=.o}
 CC			=	@gcc

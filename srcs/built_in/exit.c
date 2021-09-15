@@ -57,7 +57,7 @@ void	bi_exit(t_command *ins, char **env, char **av)
 	{
 		ret = ft_atoc(av[1]);
 		if (ret == -1)
-			g_exit = exit_error(av[1], "numeric argument required", 1, 7);
+			g_glob.exit = exit_error(av[1], "numeric argument required", 1, 7);
 	}
 	free_command(ins);
 	rl_clear_history();

@@ -30,7 +30,7 @@ void	sig_m(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit = 130;
+		g_glob.exit = 130;
 	}
 }
 
@@ -40,6 +40,13 @@ char	*new_line(void)
 	signal(SIGQUIT, SIG_IGN);
 	rl_on_new_line();
 	return (readline("\033[1;31m(っ•́｡•́)♪♬ \033[1;32m>\033[0;37m "));
+}
+
+void	end_main(char **env)
+{
+	rl_clear_history();
+	free_env(env);
+	printf("exit\n");
 }
 
 int	main(int ac, char **av, char **env)
@@ -59,14 +66,13 @@ int	main(int ac, char **av, char **env)
 			{
 				command = parser(ft_strdup(str), env);
 				free(str);
-				env = recurs_pipe(command, NULL, 0, env);
+				if (command->av && command->av[0])
+					env = recurs_pipe(command, NULL, 0, env);
 				free_command(command);
 			}
 			else
 				free(str);
 		}
 	}
-	rl_clear_history();
-	free_env(env);
-	printf("exit\n");
+	end_main(env);
 }
