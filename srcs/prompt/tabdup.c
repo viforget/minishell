@@ -20,7 +20,7 @@ char	**tabdup(char **tab)
 	int		i;
 
 	i = 0;
-	cpy = malloc(sizeof(char *) * tablen(tab) + 1);
+	cpy = malloc(sizeof(char *) * (tablen(tab) + 1));
 	while (tab[i])
 	{
 		cpy[i] = ft_strdup(tab[i]);
