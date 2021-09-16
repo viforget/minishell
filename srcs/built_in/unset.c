@@ -16,7 +16,10 @@ char	**supp_arg(char **env, char *str)
 	while (env[j + b])
 	{
 		if (j == i)
+		{
+			free(env[j]);
 			b = 1;
+		}
 		env2[j] = env[j + b];
 		j++;
 	}
